@@ -1,14 +1,14 @@
-import './App.css'
+import { RouterProvider } from 'react-router';
+import './App.css';
+import { Router } from './Router';
 
 function App() {
-
   return (
     <>
-      <div>
-        Det funkar!!!
-      </div>
+      <RouterProvider router= {Router}>
+      </RouterProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
