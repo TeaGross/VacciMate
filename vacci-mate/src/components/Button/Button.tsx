@@ -7,7 +7,7 @@ export const PrimaryButton = styled.button`
     background-color: #311811;
     border: none;
     border-radius: 0.7rem;
-    color: #FFF1B2;
+    color: #FAF9F5;
     font-family: "Inter", sans-serif;
     font-size: 1rem;
     cursor: pointer;
