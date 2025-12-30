@@ -7,6 +7,7 @@ import { LoginPage } from './pages/Login/Login';
 import { AddVaccinationPage } from './pages/AddVaccination/AddVaccination';
 import { EditVaccinationPage } from './pages/EditVaccination/EditVaccination';
 import { Layout } from './pages/Layout';
+import { RegisterPage } from './pages/Register/Register';
 
 export const Router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ export const Router = createBrowserRouter([
             {
                 path: '/login',
                 element: <LoginPage/>,
+            },
+            {
+                path: '/register',
+                element: <RegisterPage/>,
             },
             {
                 path: '/home',

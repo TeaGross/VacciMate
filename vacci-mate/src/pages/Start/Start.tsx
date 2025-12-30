@@ -10,9 +10,9 @@ export const StartPage = () => {
         <h2>Missa aldrig en vaccination igen</h2>
         <p>VacciMate är ett digitalt alternativ till det traditionella gula vaccinationskortet.
           Samla alla dina vaccinationer på ett ställe och få hjälp att hålla koll på doser och påminnelser.</p>
+        <FeatureList></FeatureList>
       </div>
       
-      <FeatureList></FeatureList>
       <RegisterBox></RegisterBox>
     </div>
     </>

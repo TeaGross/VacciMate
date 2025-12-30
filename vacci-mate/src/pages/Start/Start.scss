@@ -31,7 +31,7 @@
     .start-page {
         .start-info-wrapper{
             h2 {
-                font-size: 2.1rem;
+                font-size: 2rem;
             }
             p {
                 font-size: 1.3rem;
@@ -41,13 +41,9 @@
     }
 }
 
-// @media screen and (min-width: 1280px) {
-//     .start-page {
-
-//         h2 {
-//         }
-
-//         p {
-//         }
-//     }
-// }
+@media screen and (min-width: 1280px) {
+    .start-page {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}

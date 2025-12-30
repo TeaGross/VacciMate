@@ -1,0 +1,9 @@
+.back-link {
+    display: flex;
+    text-decoration: none;
+    color: #311811;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
