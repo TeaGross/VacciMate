@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import './LoginForm.scss';
 import { PrimaryButton } from '../Button/Button';
+import { BackToStartLink } from '../BackToStartLink/BackToStartLink';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -40,6 +41,7 @@ export const LoginForm = () => {
             </label>
 
             <PrimaryButton type="submit">Logga in</PrimaryButton>
+            <BackToStartLink></BackToStartLink>
         </form>
     );
 };
