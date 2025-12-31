@@ -1,7 +1,7 @@
 export interface VaccinationDose {
   id: string;
   date: string;
-  doseNumber: number;
+  doseNumber: string;
   location: string;
   comment?: string;
   reminder: boolean;

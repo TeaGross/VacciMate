@@ -7,7 +7,7 @@ import { PrimaryButton } from '../Button/Button';
 export const AddVaccinationForm = () => {
     const [vaccineName, setVaccineName] = useState('');
     const [date, setDate] = useState('');
-    const [doseNumber, setDoseNumber] = useState(0);
+    const [doseNumber, setDoseNumber] = useState('');
     const [totalDoses, setTotalDoses] = useState('');
     const [location, setLocation] = useState('');
     const [comment, setComment] = useState('');
@@ -31,7 +31,7 @@ export const AddVaccinationForm = () => {
 
         console.log('Vaccinationsdos sparad', dose);
 
-        // TODO: reset / navigera
+        // TODO: navigera till home
     };
 
     return (
@@ -56,27 +56,28 @@ export const AddVaccinationForm = () => {
                     required
                 />
             </label>
+            <div className='dose-container'>
+                <label>
+                    Dosnummer
+                    <input
+                        type='text'
+                        value={doseNumber}
+                        min={1}
+                        max={totalDoses}
+                        onChange={(e) => setDoseNumber(e.target.value)}
+                    />
+                </label>
 
-            <label>
-                Dosnummer
-                <input
-                    type='number'
-                    value={doseNumber}
-                    min={1}
-                    max={totalDoses}
-                    onChange={(e) => setDoseNumber(Number(e.target.value))}
-                />
-            </label>
-
-            <label>
-                Totala doser
-                <input
-                    type='text'
-                    value={totalDoses}
-                    min={1}
-                    onChange={(e) => setTotalDoses(e.target.value)}
-                />
-            </label>
+                <label>
+                    Totala doser
+                    <input
+                        type='text'
+                        value={totalDoses}
+                        min={1}
+                        onChange={(e) => setTotalDoses(e.target.value)}
+                    />
+                </label>
+            </div>
 
             <label>
                 Plats för vaccination
