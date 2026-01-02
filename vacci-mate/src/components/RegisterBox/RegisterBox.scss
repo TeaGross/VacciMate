@@ -1,0 +1,36 @@
+.register-box-form {
+    margin-top: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 30rem;
+    background-color: white;
+    box-shadow: 0 2px 5px #3118118e;
+    border-radius: 0.7rem;
+    padding-bottom: 2rem;
+    font-family: 'Merriweather', serif;
+        
+    h3 {
+        font-family: "Merriweather", serif;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    input {
+        min-width: 15rem;
+        height: 2rem;
+        border-radius: 0.7rem;
+        border: 2px solid #3118118e;
+    }
+}
+
+
+@media screen and (min-width: 1280px) {
+    .register-form {
+        min-width: 36rem;
+        min-height: 12rem;
+    }
+}

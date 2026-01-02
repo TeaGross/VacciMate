@@ -1,9 +1,14 @@
+import { AddVaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
 import './AddVaccination.scss';
 
 export const AddVaccinationPage = () => {
     return (
     <>
-    <h2>Add vaccination page</h2>
+    <div className='add-vaccination-page'>
+        <h2>Lägg till en vaccination</h2>
+        <AddVaccinationForm></AddVaccinationForm>
+    </div>
+
     </>
     );
 };
