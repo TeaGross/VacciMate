@@ -1,7 +1,13 @@
+import { VaccinationList } from '../../components/VaccinationList/VaccinationList';
+
+
 export const HomePage = () => {
   return (
     <>
-    <div>Home</div>
+      <div className="home-page">
+        Home
+        <VaccinationList></VaccinationList>
+      </div>
     </>
   );
 };
