@@ -16,7 +16,7 @@ export const AddVaccinationForm = ({
     onSubmit,
     buttonLabel = 'Spara'
 }: AddVaccinationFormProps = {}) => {
-    const {vaccinations, setVaccinations } = useContext(VaccinationContext);
+    const {setVaccinations } = useContext(VaccinationContext);
     const [vaccineName, setVaccineName] = useState(initialData?.vaccineName || '');
     const [date, setDate] = useState(initialData?.date || '');
     const [doseNumber, setDoseNumber] = useState(initialData?.doseNumber || '');
