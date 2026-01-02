@@ -1,24 +1,36 @@
-import './AddVaccinationForm.scss';
-import { useState, type FormEvent } from 'react';
-import { addVaccinationDose } from '../../utils/VaccinationStorage';
+import './VaccinationForm.scss';
+import { useContext, useState, type FormEvent } from 'react';
+import { addVaccinationDose, getVaccinations } from '../../utils/VaccinationStorage';
 import type { VaccinationDose } from '../../models/Vaccinations';
 import { PrimaryButton } from '../Button/Button';
+import { VaccinationContext } from '../../context/VaccinationContext';
 
-export const AddVaccinationForm = () => {
-    const [vaccineName, setVaccineName] = useState('');
-    const [date, setDate] = useState('');
-    const [doseNumber, setDoseNumber] = useState('');
-    const [totalDoses, setTotalDoses] = useState('');
-    const [location, setLocation] = useState('');
-    const [comment, setComment] = useState('');
-    const [reminder, setReminder] = useState(false);
-    const [reminderDate, setReminderDate] = useState('');
+interface AddVaccinationFormProps {
+    initialData?: VaccinationDose & { vaccineName: string; totalDoses: string };
+    onSubmit?: (_dose: VaccinationDose) => void;
+    buttonLabel?: string;
+}
+
+export const AddVaccinationForm = ({ 
+    initialData, 
+    onSubmit,
+    buttonLabel = 'Spara'
+}: AddVaccinationFormProps = {}) => {
+    const {vaccinations, setVaccinations } = useContext(VaccinationContext);
+    const [vaccineName, setVaccineName] = useState(initialData?.vaccineName || '');
+    const [date, setDate] = useState(initialData?.date || '');
+    const [doseNumber, setDoseNumber] = useState(initialData?.doseNumber || '');
+    const [totalDoses, setTotalDoses] = useState(initialData?.totalDoses || '');
+    const [location, setLocation] = useState(initialData?.location || '');
+    const [comment, setComment] = useState(initialData?.comment || '');
+    const [reminder, setReminder] = useState(initialData?.reminder || false);
+    const [reminderDate, setReminderDate] = useState(initialData?.reminderDate || '');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const dose: VaccinationDose = {
-        id: crypto.randomUUID(),
+        id: initialData?.id || crypto.randomUUID(),
         date,
         doseNumber,
         location,
@@ -27,9 +39,26 @@ export const AddVaccinationForm = () => {
         reminderDate: reminder ? reminderDate : null,
         };
 
-        addVaccinationDose(vaccineName, totalDoses, dose);
+        if (onSubmit) {
+            onSubmit(dose);
+        } else {
+            addVaccinationDose(vaccineName, totalDoses, dose);
+            setVaccinations(getVaccinations());
+        }
 
         console.log('Vaccinationsdos sparad', dose);
+
+        // Only reset form if not editing
+        if (!initialData) {
+            setVaccineName('');
+            setDate('');
+            setDoseNumber('');
+            setTotalDoses('');
+            setLocation('');
+            setComment('');
+            setReminder(false);
+            setReminderDate('');
+        }
 
         // TODO: navigera till home
     };
@@ -120,7 +149,7 @@ export const AddVaccinationForm = () => {
                 </label>
             )}
 
-            <PrimaryButton type='submit'>Spara</PrimaryButton>
+            <PrimaryButton type='submit'>{buttonLabel}</PrimaryButton>
         </form>
     );
 };

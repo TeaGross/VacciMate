@@ -40,7 +40,7 @@ export const Router = createBrowserRouter([
                 element: <VaccinationPage />
             },
             {
-                path: '/home/:id/edit',
+                path: '/home/edit/:id',
                 element: <EditVaccinationPage />
             }
         ]
