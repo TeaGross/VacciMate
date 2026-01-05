@@ -15,7 +15,7 @@ export const VaccinationList = () => {
                 }, undefined as (typeof v.doses)[0] | undefined);
 
                 return (
-                    <div className='vaccination-card' key={v.id}>
+                    <NavLink to={`/home/${v.id}`} className='vaccination-card' key={v.id}>
                         <div className='card-info'>
                             <h3>{v.vaccineName}</h3>
                             <p>{v.doses.length} av {v.totalDoses} doser</p>
@@ -30,9 +30,9 @@ export const VaccinationList = () => {
                         </div>
 
                         <div className='card-actions'>
-                                <NavLink to={`/home/${v.id}`} className='detail-link'>Visa detaljer <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#311811"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></NavLink>
+                                <span className='detail-link'>Visa detaljer <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#311811"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></span>
                         </div>
-                    </div>
+                    </NavLink>
                 );
             })}
         </div>
