@@ -1,7 +1,10 @@
+import { VaccinationPresentation } from '../../components/VaccinationPresentation/VaccinationPresentation';
+
 export const VaccinationPage = () => {
+
     return (
         <>
-        <h2>Vaccination page</h2>
+            <VaccinationPresentation></VaccinationPresentation>
         </>
     );
 };

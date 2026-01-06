@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PrimaryButton = styled.button`
-    min-width: 9rem;
+    min-width: 7rem;
     min-height: 2.5rem;
     padding: 0.5rem 1rem;
     background-color: #311811;
@@ -27,6 +27,7 @@ export const SecondaryButton = styled(PrimaryButton)`
         color: black;
     }
 `;
+
 
 export const LinkButton = styled(PrimaryButton)`
     background-color: transparent;
