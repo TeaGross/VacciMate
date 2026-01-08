@@ -8,6 +8,8 @@ import { AddVaccinationPage } from './pages/AddVaccination/AddVaccination';
 import { EditVaccinationPage } from './pages/EditVaccination/EditVaccination';
 import { Layout } from './pages/Layout';
 import { RegisterPage } from './pages/Register/Register';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import { GuestOnlyRoute } from './components/GuestOnlyRoute/GuestOnlyRoute';
 
 export const Router = createBrowserRouter([
     {
@@ -21,27 +23,51 @@ export const Router = createBrowserRouter([
             },
             {
                 path: '/login',
-                element: <LoginPage/>,
+                element: (
+                    <GuestOnlyRoute>
+                        <LoginPage/>
+                    </GuestOnlyRoute>
+                ),
             },
             {
                 path: '/register',
-                element: <RegisterPage/>,
+                element: (
+                    <GuestOnlyRoute>
+                        <RegisterPage/>,
+                    </GuestOnlyRoute>
+                ),
             },
             {
                 path: '/home',
-                element: <HomePage/>,
+                element: (
+                    <ProtectedRoute>
+                        <HomePage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: '/home/add',
-                element: <AddVaccinationPage />
+                element: (
+                    <ProtectedRoute>
+                        <AddVaccinationPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: '/home/:id',
-                element: <VaccinationPage />
+                element: (
+                    <ProtectedRoute>
+                        <VaccinationPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: '/home/edit/:id',
-                element: <EditVaccinationPage />
+                element: (
+                    <ProtectedRoute>
+                        <EditVaccinationPage />
+                    </ProtectedRoute>
+                ),
             }
         ]
     }
