@@ -1,13 +1,23 @@
-import React, { createContext } from 'react';
-import type { Vaccination } from '../models/Vaccinations';
+import { createContext } from 'react';
+import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 
-
-type VaccinationContext = {
+export type VaccinationContextType = {
     vaccinations: Vaccination[];
-    setVaccinations: React.Dispatch<React.SetStateAction<Vaccination[]>>;
-};
 
-export const VaccinationContext = createContext<VaccinationContext>({
+    addVaccinationDose: (
+        vaccineName: string,
+        totalDoses: string,
+        dose: VaccinationDose
+    ) => void;
+
+    updateVaccinationDose: (dose: VaccinationDose) => void;
+
+    deleteVaccinationDose: (doseId: string) => void;
+    };
+
+    export const VaccinationContext = createContext<VaccinationContextType>({
     vaccinations: [],
-    setVaccinations: () => {},
+    addVaccinationDose: () => {},
+    updateVaccinationDose: () => {},
+    deleteVaccinationDose: () => {},
 });

@@ -1,22 +1,25 @@
 import './VaccinationForm.scss';
 import { useContext, useState, type FormEvent } from 'react';
-import { addVaccinationDose, getVaccinations } from '../../utils/VaccinationStorage';
 import type { VaccinationDose } from '../../models/Vaccinations';
 import { PrimaryButton } from '../Button/Button';
 import { VaccinationContext } from '../../context/VaccinationContext';
 
 interface AddVaccinationFormProps {
-    initialData?: VaccinationDose & { vaccineName: string; totalDoses: string };
+    initialData?: VaccinationDose & {
+        vaccineName: string;
+        totalDoses: string;
+        };
     onSubmit?: (_dose: VaccinationDose) => void;
     buttonLabel?: string;
+    onSuccess?: () => void;
 }
 
-export const AddVaccinationForm = ({ 
+export const VaccinationForm = ({ 
     initialData, 
-    onSubmit,
-    buttonLabel = 'Spara'
+    buttonLabel = 'Spara',
+    onSuccess,
 }: AddVaccinationFormProps = {}) => {
-    const {setVaccinations } = useContext(VaccinationContext);
+    const {addVaccinationDose, updateVaccinationDose } = useContext(VaccinationContext);
     const [vaccineName, setVaccineName] = useState(initialData?.vaccineName || '');
     const [date, setDate] = useState(initialData?.date || '');
     const [doseNumber, setDoseNumber] = useState(initialData?.doseNumber || '');
@@ -39,12 +42,12 @@ export const AddVaccinationForm = ({
         reminderDate: reminder ? reminderDate : null,
         };
 
-        if (onSubmit) {
-            onSubmit(dose);
-        } else {
+        if (initialData) {
+            updateVaccinationDose(dose);
+            } else {
             addVaccinationDose(vaccineName, totalDoses, dose);
-            setVaccinations(getVaccinations());
-        }
+
+            }
 
         console.log('Vaccinationsdos sparad', dose);
 
@@ -60,7 +63,10 @@ export const AddVaccinationForm = ({
             setReminderDate('');
         }
 
-        // TODO: navigera till home
+        if (onSuccess) {
+            onSuccess();
+        }
+
     };
 
     return (

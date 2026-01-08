@@ -1,17 +1,27 @@
-import { useState, type FormEvent } from 'react';
+import { useContext, useState, type FormEvent } from 'react';
 import './LoginForm.scss';
 import { PrimaryButton } from '../Button/Button';
 import { BackToStartLink } from '../BackToStartLink/BackToStartLink';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {login} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
+        const success = login(email, password);
         console.log('Email:', email);
-        console.log('Lösenord:', password);
+        console.log('Lösenord:', password, success);
+
+        if (success) {
+            navigate('/home');
+        }
+        
     };
 
     return (

@@ -2,6 +2,7 @@ import './VaccinationList.scss';
 import { useContext } from 'react';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { NavLink } from 'react-router';
+import { LinkButton } from '../Button/Button';
 
 export const VaccinationList = () => {
     const { vaccinations } = useContext(VaccinationContext);
@@ -30,7 +31,7 @@ export const VaccinationList = () => {
                         </div>
 
                         <div className='card-actions'>
-                                <span className='detail-link'>Visa detaljer <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#311811"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></span>
+                                <LinkButton className='detail-link'>Visa detaljer <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#311811"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></LinkButton>
                         </div>
                     </NavLink>
                 );
