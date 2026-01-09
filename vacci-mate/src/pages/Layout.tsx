@@ -1,5 +1,5 @@
 import './Layout.scss';
-import { Navigate, Outlet } from 'react-router';
+import { Outlet } from 'react-router';
 import { Header } from '../components/Header/Header';
 import { useState } from 'react';
 import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
@@ -28,7 +28,7 @@ export const Layout = () => {
         if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
             return { success: false, error: 'USERNAME_EXISTS' };
         }
-        
+
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             return { success: false, error: 'EMAIL_EXISTS' };
         }
