@@ -1,4 +1,4 @@
-import { AddVaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
+import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
 import './AddVaccination.scss';
 
 export const AddVaccinationPage = () => {
@@ -6,7 +6,7 @@ export const AddVaccinationPage = () => {
     <>
     <div className='add-vaccination-page'>
         <h2>Lägg till en vaccination</h2>
-        <AddVaccinationForm></AddVaccinationForm>
+        <VaccinationForm></VaccinationForm>
     </div>
 
     </>

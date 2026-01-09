@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const PrimaryButton = styled.button`
+    display: flex;
+    align-items: center;
     min-width: 7rem;
     min-height: 2.5rem;
     padding: 0.5rem 1rem;
@@ -10,6 +12,7 @@ export const PrimaryButton = styled.button`
     color: #FAF9F5;
     font-family: "Inter", sans-serif;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
 
     &:hover{
