@@ -20,15 +20,9 @@
             font-family: 'Merriweather', serif;
         }
 
-        .add-vaccination-link {
-            text-decoration: none;
-
-            .add-vaccination-btn {
-                width: 15rem;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
+        .add-vaccination-btn {
+            display: flex;
+            align-items: center;
         }
     }
 

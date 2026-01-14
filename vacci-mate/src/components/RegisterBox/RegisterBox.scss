@@ -1,4 +1,4 @@
-.register-box-form {
+.register-box {
     margin-top: 2rem;
     padding: 2rem;
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    width: 30rem;
+    max-width: 30rem;
     background-color: white;
     box-shadow: 0 2px 5px #3118118e;
     border-radius: 0.7rem;
@@ -18,19 +18,12 @@
         margin-bottom: 0;
         text-align: center;
     }
-
-    input {
-        min-width: 15rem;
-        height: 2rem;
-        border-radius: 0.7rem;
-        border: 2px solid #3118118e;
-    }
 }
 
 
 @media screen and (min-width: 1280px) {
-    .register-form {
-        min-width: 36rem;
+    .register-box {
+        min-width: 26rem;
         min-height: 12rem;
     }
 }
