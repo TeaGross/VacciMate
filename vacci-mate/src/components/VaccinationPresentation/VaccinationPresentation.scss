@@ -53,6 +53,11 @@
 
     }
 
+    .add-dose-wrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     @media screen and (min-width: 786px) {
     .dose-presentation-container {
         flex-direction: row;

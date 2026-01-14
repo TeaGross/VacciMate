@@ -52,3 +52,14 @@ export const TertiaryButton = styled(PrimaryButton)`
         color: black;
     }
 `;
+
+export const DeleteButton = styled(PrimaryButton)`
+    background-color: #7f1717;
+    border: none;
+    color: white;
+
+    &:hover{
+        background-color: #5b1e1e;
+        color: white;
+    }
+`;

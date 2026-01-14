@@ -1,4 +1,3 @@
-import './EditVaccination.scss';
 import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
@@ -10,18 +9,24 @@ export const EditVaccinationPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Find dose to edit
   const doseToEdit = vaccinations
-    .flatMap(v => v.doses.map(d => ({ ...d, vaccineName: v.vaccineName, totalDoses: v.totalDoses, vaccinationId: v.id })))
+    .flatMap(v => v.doses)
     .find(d => d.id === id);
 
+  const parentVaccination = vaccinations.find(v =>
+    v.doses.some(d => d.id === id)
+  );
+
+  if (!doseToEdit || !parentVaccination) {
+  return <h2>Vaccination not found</h2>;
+}
 
   const handleDelete = () => {
     if (id && confirm('Är du säker på att du vill ta bort denna dos?')) {
       deleteVaccinationDose(id);
       
-      if (doseToEdit?.vaccinationId) {
-        navigate(`/home/${doseToEdit.vaccinationId}`);
+      if (parentVaccination?.id) {
+        navigate(`/home/${parentVaccination.id}`);
       } else {
         navigate('/home');
       }
@@ -36,19 +41,25 @@ export const EditVaccinationPage = () => {
 
   return (
     <>
-      <h2>Edit vaccination</h2>
+    <div className='page'>
+      <h2>Uppdatera vaccination</h2>
       <VaccinationForm 
-        initialData={doseToEdit}
+        initialVaccine={{
+          vaccineName: parentVaccination.vaccineName,
+          totalDoses: parentVaccination.totalDoses,
+        }}
+        initialDose={doseToEdit}
         buttonLabel="Uppdatera"
         onSuccess={() => {
-          if (doseToEdit?.vaccinationId) {
-            navigate(`/home/${doseToEdit.vaccinationId}`);
+          if (parentVaccination?.id) {
+            navigate(`/home/${parentVaccination.id}`);
           } else {
             navigate('/home');
           }
         }}
       />
         <SecondaryButton onClick={handleDelete}>Ta bort dos</SecondaryButton>
+    </div>
     </>
   );
 };

@@ -10,6 +10,7 @@ import { Layout } from './pages/Layout';
 import { RegisterPage } from './pages/Register/Register';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import { GuestOnlyRoute } from './components/GuestOnlyRoute/GuestOnlyRoute';
+import { AddDosePage } from './pages/AddDosePage/AddDosePage';
 
 export const Router = createBrowserRouter([
     {
@@ -60,6 +61,13 @@ export const Router = createBrowserRouter([
                         <VaccinationPage />
                     </ProtectedRoute>
                 ),
+            },
+            {
+                path: '/home/:id/add-dose',
+                element: 
+                <ProtectedRoute>
+                        <AddDosePage />
+                    </ProtectedRoute>
             },
             {
                 path: '/home/edit/:id',
