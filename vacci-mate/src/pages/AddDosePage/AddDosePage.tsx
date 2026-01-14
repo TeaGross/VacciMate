@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router';
 import { useContext } from 'react';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
+import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const AddDosePage = () => {
     const { id } = useParams();
@@ -14,7 +15,15 @@ export const AddDosePage = () => {
         return <p>Vaccinationen hittades inte</p>;
     }
 
+    const items: BreadcrumbItem[] = [
+        { label: 'Hem', path: '/home' },
+        { label: vaccination.vaccineName, path: `/home/${vaccination.id}` },
+        { label: 'Lägg till en en ny dos' },
+    ]; 
+
     return (
+        <>
+        <Breadcrumb items={items}/>
         <div className='page'>
             <h2>Lägg till ny dos av {vaccination.vaccineName}</h2>
 
@@ -27,5 +36,6 @@ export const AddDosePage = () => {
                 onSuccess={() => navigate(`/home/${vaccination.id}`)}
             />
         </div>
+        </>
     );
 };

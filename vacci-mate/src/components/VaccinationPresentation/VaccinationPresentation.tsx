@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { Link, useParams } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { DeleteButton, PrimaryButton } from '../Button/Button';
+import { Breadcrumb, type BreadcrumbItem } from '../Breadcrumb/Breadcrumb';
 
 export const VaccinationPresentation = () => {
     const { id } = useParams();
@@ -13,9 +14,16 @@ export const VaccinationPresentation = () => {
     if (!vaccination) {
         return <p>Vaccinationen kan inte hittas</p>;
     } 
+    
+    const items: BreadcrumbItem[] = [
+    { label: 'Hem', path: '/home' },
+    { label: vaccination?.vaccineName },
+    ]; 
+
 
     return (
         <>
+        <Breadcrumb items={items}></Breadcrumb>
         <div className='vaccination-presentation-page'>
             <div className='vaccination-presentation'>
                 <h2>{vaccination?.vaccineName}</h2>

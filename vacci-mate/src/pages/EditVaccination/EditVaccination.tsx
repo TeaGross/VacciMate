@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
 import { SecondaryButton } from '../../components/Button/Button';
+import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const EditVaccinationPage = () => {
   const { vaccinations, deleteVaccinationDose } = useContext(VaccinationContext);
@@ -10,16 +11,22 @@ export const EditVaccinationPage = () => {
   const navigate = useNavigate();
 
   const doseToEdit = vaccinations
-    .flatMap(v => v.doses)
-    .find(d => d.id === id);
-
+  .flatMap(v => v.doses)
+  .find(d => d.id === id);
+  
   const parentVaccination = vaccinations.find(v =>
     v.doses.some(d => d.id === id)
   );
-
+  
   if (!doseToEdit || !parentVaccination) {
-  return <h2>Vaccination not found</h2>;
-}
+    return <h2>Vaccinationen kunde ej hittas</h2>;
+  }
+  
+  const items: BreadcrumbItem[] = [
+    { label: 'Hem', path: '/home' },
+    { label: parentVaccination.vaccineName, path: `/home/${parentVaccination.id}` },
+    { label: 'Redigera vaccination' },
+  ];
 
   const handleDelete = () => {
     if (id && confirm('Är du säker på att du vill ta bort denna dos?')) {
@@ -33,16 +40,11 @@ export const EditVaccinationPage = () => {
     }
   };
 
-  if (!doseToEdit) {
-    console.log(id, doseToEdit);
-    return <h2>Vaccination not found</h2>;
-  }
-
-
   return (
     <>
+    <Breadcrumb items={items}/>
     <div className='page'>
-      <h2>Uppdatera vaccination</h2>
+      <h2>Redigera vaccination</h2>
       <VaccinationForm 
         initialVaccine={{
           vaccineName: parentVaccination.vaccineName,
