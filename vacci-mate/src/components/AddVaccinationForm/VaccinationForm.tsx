@@ -4,16 +4,6 @@ import type { VaccinationDose } from '../../models/Vaccinations';
 import { PrimaryButton } from '../Button/Button';
 import { VaccinationContext } from '../../context/VaccinationContext';
 
-// interface AddVaccinationFormProps {
-//     initialData?: VaccinationDose & {
-//         vaccineName: string;
-//         totalDoses: string;
-//         };
-//     onSubmit?: (_dose: VaccinationDose) => void;
-//     buttonLabel?: string;
-//     onSuccess?: () => void;
-// }
-
 interface VaccinationFormProps {
     initialVaccine?: {
         vaccineName: string;
@@ -48,25 +38,11 @@ export const VaccinationForm = ({
     initialDose?.reminderDate ?? ''
     );
 
+    const isVaccineLocked = Boolean(initialVaccine);
+
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // const dose: VaccinationDose = {
-        // id: initialData?.id || crypto.randomUUID(),
-        // date,
-        // doseNumber,
-        // location,
-        // comment,
-        // reminder,
-        // reminderDate: reminder ? reminderDate : null,
-        // };
-
-        // if (initialData) {
-        //     updateVaccinationDose(dose);
-        //     } else {
-        //     addVaccinationDose(vaccineName, totalDoses, dose);
-
-        //     }
 
         const dose: VaccinationDose = {
             id: initialDose?.id ?? crypto.randomUUID(),
@@ -113,8 +89,15 @@ export const VaccinationForm = ({
                     placeholder='Vaccinationens namn'
                     value={vaccineName}
                     onChange={(e) => setVaccineName(e.target.value)}
+                    disabled={isVaccineLocked}
                     required
                 />
+                
+                {isVaccineLocked && 
+                    <small className="hint">
+                        Kan inte ändras här
+                    </small>
+                }
             </label>
 
             <label>
@@ -145,7 +128,13 @@ export const VaccinationForm = ({
                         value={totalDoses}
                         min={1}
                         onChange={(e) => setTotalDoses(e.target.value)}
+                        disabled={isVaccineLocked}
                     />
+                    {isVaccineLocked && 
+                    <small className="hint">
+                        Kan inte ändras här
+                    </small>
+                }
                 </label>
             </div>
 

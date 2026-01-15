@@ -2,11 +2,10 @@ import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
-import { SecondaryButton } from '../../components/Button/Button';
 import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const EditVaccinationPage = () => {
-  const { vaccinations, deleteVaccinationDose } = useContext(VaccinationContext);
+  const { vaccinations } = useContext(VaccinationContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -28,17 +27,6 @@ export const EditVaccinationPage = () => {
     { label: 'Redigera vaccination' },
   ];
 
-  const handleDelete = () => {
-    if (id && confirm('Är du säker på att du vill ta bort denna dos?')) {
-      deleteVaccinationDose(id);
-      
-      if (parentVaccination?.id) {
-        navigate(`/home/${parentVaccination.id}`);
-      } else {
-        navigate('/home');
-      }
-    }
-  };
 
   return (
     <>
@@ -60,7 +48,6 @@ export const EditVaccinationPage = () => {
           }
         }}
       />
-        <SecondaryButton onClick={handleDelete}>Ta bort dos</SecondaryButton>
     </div>
     </>
   );
