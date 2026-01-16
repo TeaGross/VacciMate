@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
+import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
 import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const AddVaccinationPage = () => {

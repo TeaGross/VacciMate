@@ -1,6 +1,8 @@
+import { demoVaccinations } from '../data/MockVaccinations';
 import type { Vaccination } from '../models/Vaccinations';
 
 const STORAGE_KEY = 'vaccinationsByUser';
+const DEMO_USER_ID = 'demo-user';
 
 type VaccinationMap = {
     [userId: string]: Vaccination[];
@@ -15,9 +17,22 @@ type VaccinationMap = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
     };
 
+    // export const getVaccinationsForUser = (userId: string): Vaccination[] => {
+    // const map = getAll();
+    // return map[userId] ?? [];
+    // };
+
     export const getVaccinationsForUser = (userId: string): Vaccination[] => {
-    const map = getAll();
-    return map[userId] ?? [];
+        const map = getAll();
+
+        // 👇 Seed demo-data första gången
+        if (!map[userId] && userId === DEMO_USER_ID) {
+            map[userId] = demoVaccinations;
+            saveAll(map);
+            return demoVaccinations;
+        }
+
+        return map[userId] ?? [];
     };
 
     export const saveVaccinationsForUser = (

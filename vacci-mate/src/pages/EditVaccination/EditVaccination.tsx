@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
-import { VaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
+import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
 import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const EditVaccinationPage = () => {

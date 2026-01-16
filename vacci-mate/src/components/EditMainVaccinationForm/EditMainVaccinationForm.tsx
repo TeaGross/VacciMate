@@ -34,12 +34,12 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
 
     return (
         <form onSubmit={handleSubmit} className='edit-main-vaccination-form'>
-        <label>
+        <label className='edit-main-vaccination-label'>
             Vaccinationens namn
             <input value={name} onChange={e => setName(e.target.value)} />
         </label>
 
-        <label>
+        <label className='edit-main-vaccination-label'>
             Totala doser
             <input
             type="text"
