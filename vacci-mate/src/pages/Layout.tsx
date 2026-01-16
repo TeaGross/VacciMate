@@ -119,7 +119,20 @@ export const Layout = () => {
         }));
 
         updateVaccinations(updated);
-        };
+    };
+
+    const updateVaccination = (
+        vaccinationId: string,
+        updates: Partial<Pick<Vaccination, 'vaccineName' | 'totalDoses'>>
+        ) => {
+        const updated = vaccinations.map(v =>
+            v.id === vaccinationId
+            ? { ...v, ...updates }
+            : v
+        );
+
+        updateVaccinations(updated);
+    };
 
     const deleteVaccinationDose = (doseId: string) => {
         const updated = vaccinations
@@ -144,6 +157,7 @@ export const Layout = () => {
                 vaccinations,
                 addVaccinationDose,
                 updateVaccinationDose,
+                updateVaccination,
                 deleteVaccinationDose,
             }}>
                 <div className='vacci-mate-layout-container'>

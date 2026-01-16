@@ -12,6 +12,11 @@ export type VaccinationContextType = {
 
     updateVaccinationDose: (dose: VaccinationDose) => void;
 
+    updateVaccination: (
+    vaccinationId: string,
+    updates: Partial<Pick<Vaccination, 'vaccineName' | 'totalDoses'>>
+    ) => void;
+
     deleteVaccinationDose: (doseId: string) => void;
     };
 
@@ -19,5 +24,6 @@ export type VaccinationContextType = {
     vaccinations: [],
     addVaccinationDose: () => {},
     updateVaccinationDose: () => {},
+    updateVaccination: () => {},
     deleteVaccinationDose: () => {},
 });

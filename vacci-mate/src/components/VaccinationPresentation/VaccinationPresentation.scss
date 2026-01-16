@@ -13,16 +13,30 @@
     padding: 1rem;
     font-family: 'Merriweather', serif;
 
-    h2 {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.6rem;
-        margin-bottom: 0;
+    .main-vaccination-container {
+        display: flex;
+        justify-content: space-between;
+
+        .name-doses-container {
+            h2 {
+                font-family: 'Inter', sans-serif;
+                font-size: 1.6rem;
+                margin-bottom: 0;
+            }
+        
+            p {
+                margin-top: 0.4rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .edit-main-vaccination-btn {
+            height: 2rem;
+            bottom: 0;
+        }
     }
 
-    p {
-        margin-top: 0.4rem;
-        margin-bottom: 1.5rem;
-    }
+
     }
 
     .dose-presentation-container {

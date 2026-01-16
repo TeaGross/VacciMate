@@ -40,6 +40,8 @@ export const VaccinationForm = ({
 
     const isVaccineLocked = Boolean(initialVaccine);
 
+    const [showDoseError, setShowDoseError] = useState(false);
+
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -55,9 +57,14 @@ export const VaccinationForm = ({
             };
 
             if (initialDose) {
-            updateVaccinationDose(dose);
+                updateVaccinationDose(dose);
             } else {
-            addVaccinationDose(vaccineName, totalDoses, dose);
+                addVaccinationDose(vaccineName, totalDoses, dose);
+            }
+
+            if (totalDoses < doseNumber) {
+                setShowDoseError(true);
+                return;
             }
 
         console.log('Vaccinationsdos sparad', dose);
@@ -119,8 +126,10 @@ export const VaccinationForm = ({
                         max={totalDoses}
                         onChange={(e) => setDoseNumber(e.target.value)}
                     />
+                    {showDoseError && (
+                    <p className='form-error'>Antal doser kan inte vara högre än befintliga doser</p>
+                )}
                 </label>
-
                 <label>
                     Totala doser
                     <input
