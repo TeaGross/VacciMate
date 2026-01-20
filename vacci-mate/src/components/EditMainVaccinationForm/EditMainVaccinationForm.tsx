@@ -50,7 +50,7 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
         </label>
 
         {showDoseError && (
-            <p className='form-error'>Antal doser kan inte vara lägre än befintliga doser</p>
+            <p className='form-error'>Kan inte vara lägre än befintliga doser</p>
         )}
 
         <PrimaryButton type="submit">Spara</PrimaryButton>

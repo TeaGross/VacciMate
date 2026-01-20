@@ -46,6 +46,7 @@ export const VaccinationForm = ({
     const [showDoseError, setShowDoseError] = useState(false);
 
 
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -59,7 +60,8 @@ export const VaccinationForm = ({
             reminderDate: reminder ? reminderDate : null,
             };
 
-            if (totalDoses < doseNumber) {
+
+            if (+doseNumber > +totalDoses) {
                 setShowDoseError(true);
                 return;
             }
@@ -138,10 +140,13 @@ export const VaccinationForm = ({
                         value={doseNumber}
                         min={1}
                         max={totalDoses}
-                        onChange={(e) => setDoseNumber(e.target.value)}
+                        onChange={(e) => {
+                            setDoseNumber(e.target.value);
+                            setShowDoseError(false);
+                        }}
                     />
                     {showDoseError && (
-                    <p className='form-error'>Antal doser kan inte vara högre än befintliga doser</p>
+                    <p className='form-error'>Kan ej vara högre än totala doser</p>
                 )}
                 </label>
                 <label>
