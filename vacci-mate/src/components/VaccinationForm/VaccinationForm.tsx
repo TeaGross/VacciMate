@@ -3,6 +3,8 @@ import { useContext, useState, type FormEvent } from 'react';
 import type { VaccinationDose } from '../../models/Vaccinations';
 import { PrimaryButton } from '../Button/Button';
 import { VaccinationContext } from '../../context/VaccinationContext';
+import { createReminder } from '../../services/reminderService';
+import { AuthContext } from '../../context/AuthContext';
 
 interface VaccinationFormProps {
     initialVaccine?: {
@@ -21,6 +23,7 @@ export const VaccinationForm = ({
     onSuccess,
 }: VaccinationFormProps = {}) => {
     const {addVaccinationDose, updateVaccinationDose } = useContext(VaccinationContext);
+    const {activeUser} = useContext(AuthContext);
 
     const [vaccineName, setVaccineName] = useState(
         initialVaccine?.vaccineName ?? ''
@@ -43,7 +46,7 @@ export const VaccinationForm = ({
     const [showDoseError, setShowDoseError] = useState(false);
 
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const dose: VaccinationDose = {
@@ -56,18 +59,29 @@ export const VaccinationForm = ({
             reminderDate: reminder ? reminderDate : null,
             };
 
+            if (totalDoses < doseNumber) {
+                setShowDoseError(true);
+                return;
+            }
+
             if (initialDose) {
                 updateVaccinationDose(dose);
             } else {
                 addVaccinationDose(vaccineName, totalDoses, dose);
             }
 
-            if (totalDoses < doseNumber) {
-                setShowDoseError(true);
-                return;
-            }
 
         console.log('Vaccinationsdos sparad', dose);
+
+        if (reminder && reminderDate && activeUser) {
+            await createReminder({
+                id: crypto.randomUUID(),
+                doseId: dose.id,
+                email: activeUser.email,
+                remindAt: reminderDate,
+                vaccineName: vaccineName,
+            });
+        }
 
         // Only reset form if not editing
         if (!initialDose) {
