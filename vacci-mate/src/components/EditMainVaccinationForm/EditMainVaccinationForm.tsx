@@ -1,4 +1,4 @@
-import { useContext, useState, type FormEvent } from 'react';
+import { useContext} from 'react';
 import { PrimaryButton } from '../Button/Button';
 import type { Vaccination } from '../../models/Vaccinations';
 import { VaccinationContext } from '../../context/VaccinationContext';
@@ -47,9 +47,9 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
                 required: 'Vaccinationens namn krävs',
             })}
             />
-        {errors.vaccineName && (
-        <span className="form-error">{errors.vaccineName.message}</span>
-        )}
+            {errors.vaccineName && (
+            <span className="form-error">{errors.vaccineName.message}</span>
+            )}
         </label>
 
         <label className='edit-main-vaccination-label'>
@@ -64,9 +64,9 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
                 'Kan inte vara lägre än befintliga doser',
             })}
             />
-        {errors.totalDoses && (
-        <span className="form-error">{errors.totalDoses.message}</span>
-        )}
+            {errors.totalDoses && (
+            <span className="form-error">{errors.totalDoses.message}</span>
+            )}
         </label>
 
 
