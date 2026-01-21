@@ -48,14 +48,14 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             })}
             />
             {errors.vaccineName && (
-            <span className="form-error">{errors.vaccineName.message}</span>
+            <span className='form-error'>{errors.vaccineName.message}</span>
             )}
         </label>
 
         <label className='edit-main-vaccination-label'>
             Totala doser
             <input
-            type="text"
+            type='text'
             {...register('totalDoses', {
                 required: 'Totala doser krävs',
                 pattern: patterns.onlyNumbers,
@@ -65,12 +65,12 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             })}
             />
             {errors.totalDoses && (
-            <span className="form-error">{errors.totalDoses.message}</span>
+            <span className='form-error'>{errors.totalDoses.message}</span>
             )}
         </label>
 
 
-        <PrimaryButton type="submit">Spara</PrimaryButton>
+        <PrimaryButton type='submit'>Spara</PrimaryButton>
         </form>
     );
 };

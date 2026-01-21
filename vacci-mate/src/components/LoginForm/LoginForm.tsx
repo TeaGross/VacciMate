@@ -1,4 +1,4 @@
-import { useContext, useState, type FormEvent } from 'react';
+import { useContext} from 'react';
 import './LoginForm.scss';
 import { PrimaryButton } from '../Button/Button';
 import { BackToStartLink } from '../BackToStartLink/BackToStartLink';
@@ -36,14 +36,14 @@ export const LoginForm = () => {
     };
 
     return (
-        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
             <h2>Logga in</h2>
 
             <label>
             E-postadress
                 <input
-                type="text"
-                placeholder="E-postadress"
+                type='text'
+                placeholder='E-postadress'
                 {...register('email', {
                 required: 'E-post krävs',
                 pattern: patterns.email,
@@ -51,26 +51,26 @@ export const LoginForm = () => {
                 />
 
                 {errors.email && (
-                    <span className="form-error">{errors.email.message}</span>
+                    <span className='form-error'>{errors.email.message}</span>
                 )}
             </label>
 
             <label>
             Lösenord
                 <input
-                type="password"
-                placeholder="Lösenord"
+                type='password'
+                placeholder='Lösenord'
                 {...register('password', {
                 required: 'Lösenord krävs',
                 })}
                 />
 
                 {errors.password && (
-                    <span className="form-error">{errors.password.message}</span>
+                    <span className='form-error'>{errors.password.message}</span>
                 )}
             </label>
 
-            <PrimaryButton type="submit">Logga in</PrimaryButton>
+            <PrimaryButton type='submit'>Logga in</PrimaryButton>
             <BackToStartLink></BackToStartLink>
         </form>
     );
