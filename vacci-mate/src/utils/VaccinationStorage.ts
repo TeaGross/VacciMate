@@ -17,10 +17,6 @@ type VaccinationMap = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
     };
 
-    // export const getVaccinationsForUser = (userId: string): Vaccination[] => {
-    // const map = getAll();
-    // return map[userId] ?? [];
-    // };
 
     export const getVaccinationsForUser = (userId: string): Vaccination[] => {
         const map = getAll();

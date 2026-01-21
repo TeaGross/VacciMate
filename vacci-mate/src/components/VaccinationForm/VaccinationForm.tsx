@@ -1,10 +1,23 @@
 import './VaccinationForm.scss';
-import { useContext, useState, type FormEvent } from 'react';
+import { useContext} from 'react';
 import type { VaccinationDose } from '../../models/Vaccinations';
 import { PrimaryButton } from '../Button/Button';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { createReminder } from '../../services/reminderService';
 import { AuthContext } from '../../context/AuthContext';
+import { useForm, useWatch } from 'react-hook-form';
+import { patterns } from '../../validation/validationPatterns';
+
+type VaccinationFormValues = {
+    vaccineName: string;
+    totalDoses: string;
+    date: string;
+    doseNumber: string;
+    location?: string;
+    comment?: string;
+    reminder: boolean;
+    reminderDate?: string;
+};
 
 interface VaccinationFormProps {
     initialVaccine?: {
@@ -24,100 +37,90 @@ export const VaccinationForm = ({
 }: VaccinationFormProps = {}) => {
     const {addVaccinationDose, updateVaccinationDose } = useContext(VaccinationContext);
     const {activeUser} = useContext(AuthContext);
-
-    const [vaccineName, setVaccineName] = useState(
-        initialVaccine?.vaccineName ?? ''
-    );
-    const [totalDoses, setTotalDoses] = useState(
-        initialVaccine?.totalDoses ?? ''
-    );
-
-    const [date, setDate] = useState(initialDose?.date ?? '');
-    const [doseNumber, setDoseNumber] = useState(initialDose?.doseNumber ?? '');
-    const [location, setLocation] = useState(initialDose?.location ?? '');
-    const [comment, setComment] = useState(initialDose?.comment ?? '');
-    const [reminder, setReminder] = useState(initialDose?.reminder ?? false);
-    const [reminderDate, setReminderDate] = useState(
-    initialDose?.reminderDate ?? ''
-    );
-
     const isVaccineLocked = Boolean(initialVaccine);
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+        reset,
+        } = useForm<VaccinationFormValues>({
+        defaultValues: {
+            vaccineName: initialVaccine?.vaccineName ?? '',
+            totalDoses: initialVaccine?.totalDoses ?? '',
+            date: initialDose?.date ?? '',
+            doseNumber: initialDose?.doseNumber ?? '',
+            location: initialDose?.location ?? '',
+            comment: initialDose?.comment ?? '',
+            reminder: initialDose?.reminder ?? false,
+            reminderDate: initialDose?.reminderDate ?? '',
+        },
+    });
 
-    const [showDoseError, setShowDoseError] = useState(false);
+    const totalDoses = useWatch({
+    control,
+    name: 'totalDoses',
+    });
 
+    const reminder = useWatch({
+    control,
+    name: 'reminder',
+    });
 
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    
+    const onSubmit = async (data: VaccinationFormValues) => {
         const dose: VaccinationDose = {
             id: initialDose?.id ?? crypto.randomUUID(),
-            date,
-            doseNumber,
-            location,
-            comment,
-            reminder,
-            reminderDate: reminder ? reminderDate : null,
-            };
+            date: data.date,
+            doseNumber: data.doseNumber,
+            location: data.location ?? '',
+            comment: data.comment ?? '',
+            reminder: data.reminder,
+            reminderDate: data.reminder ? data.reminderDate! : null,
+        };
 
+        if (initialDose) {
+            updateVaccinationDose(dose);
+        } else {
+            addVaccinationDose(data.vaccineName, data.totalDoses, dose);
+        }
 
-            if (+doseNumber > +totalDoses) {
-                setShowDoseError(true);
-                return;
-            }
-
-            if (initialDose) {
-                updateVaccinationDose(dose);
-            } else {
-                addVaccinationDose(vaccineName, totalDoses, dose);
-            }
-
-
-        console.log('Vaccinationsdos sparad', dose);
-
-        if (reminder && reminderDate && activeUser) {
+        if (data.reminder && data.reminderDate && activeUser) {
             await createReminder({
-                id: crypto.randomUUID(),
-                doseId: dose.id,
-                email: activeUser.email,
-                remindAt: reminderDate,
-                vaccineName: vaccineName,
+            id: crypto.randomUUID(),
+            doseId: dose.id,
+            email: activeUser.email,
+            remindAt: data.reminderDate,
+            vaccineName: data.vaccineName,
             });
         }
 
-        // Only reset form if not editing
+        // Reset form if not editing
         if (!initialDose) {
-            setVaccineName('');
-            setDate('');
-            setDoseNumber('');
-            setTotalDoses('');
-            setLocation('');
-            setComment('');
-            setReminder(false);
-            setReminderDate('');
+            reset();
         }
 
-        if (onSuccess) {
-            onSuccess();
-        }
-
+        onSuccess?.();
     };
 
     return (
-        <form onSubmit={handleSubmit} className='add-vaccination-form'>
+        <form onSubmit={handleSubmit(onSubmit)} className='add-vaccination-form'>
             <label>
                 Vaccinationens namn
-                <input
-                    type='text'
-                    placeholder='Vaccinationens namn'
-                    value={vaccineName}
-                    onChange={(e) => setVaccineName(e.target.value)}
-                    disabled={isVaccineLocked}
-                    required
-                />
-                
+                <input 
+                type='text'
+                placeholder='Vaccinationens namn'
+                disabled={isVaccineLocked}
+                {...register('vaccineName', {
+                    required: 'Vaccinationens namn krävs',
+                })} />
+
+                {errors.vaccineName && (
+                    <span className='form-error'>{errors.vaccineName.message}</span>
+                )}
+
                 {isVaccineLocked && 
-                    <small className="hint">
+                    <small className='form-error'>
                         Kan inte ändras här
                     </small>
                 }
@@ -125,73 +128,75 @@ export const VaccinationForm = ({
 
             <label>
                 Datum
-                <input
-                    type='date'
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                />
+                <input 
+                type='date'
+                {...register('date', {
+                    required: 'Datum krävs'
+                })} />
+
+                {errors.date && <span className='form-error'>{errors.date.message}</span>}
             </label>
             <div className='dose-container'>
                 <label>
                     Dosnummer
                     <input
-                        type='text'
-                        value={doseNumber}
-                        min={1}
-                        max={totalDoses}
-                        onChange={(e) => {
-                            setDoseNumber(e.target.value);
-                            setShowDoseError(false);
-                        }}
+                    type='text'
+                    {...register('doseNumber', {
+                        required: 'Dosnummer krävs',
+                        pattern: patterns.onlyNumbers,
+                        validate: (value) =>
+                        !totalDoses || +value <= +totalDoses || 'Kan ej vara högre än totala doser',
+                    })}
                     />
-                    {showDoseError && (
-                    <p className='form-error'>Kan ej vara högre än totala doser</p>
-                )}
+
+                    {errors.doseNumber && (
+                    <span className='form-error'>{errors.doseNumber.message}</span>
+                    )}
+    
                 </label>
                 <label>
                     Totala doser
                     <input
-                        type='text'
-                        value={totalDoses}
-                        min={1}
-                        onChange={(e) => setTotalDoses(e.target.value)}
-                        disabled={isVaccineLocked}
+                    type='text'
+                    {...register('totalDoses', {
+                        required: 'Totala doser krävs',
+                        pattern: patterns.onlyNumbers,
+                    })}
+                    disabled={isVaccineLocked}
                     />
+
+                    {errors.totalDoses && (
+                    <span className='form-error'>{errors.totalDoses.message}</span>
+                    )}
+
                     {isVaccineLocked && 
-                    <small className="hint">
+                    <span className='form-error'>
                         Kan inte ändras här
-                    </small>
-                }
+                    </span>
+                    }
                 </label>
             </div>
 
             <label>
                 Plats för vaccination
                 <input
-                    type='text'
-                    placeholder='T.ex. Vårdcentral'
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                />
+                type='text'
+                placeholder='T.ex. Vårdcentral'
+                {...register('location')} />
             </label>
 
             <label>
                 Kommentar
                 <textarea
                 placeholder='Kommentar'
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                {...register('comment')} 
             />
+
+            {/* Lägg till error msg efter regex */}
             </label>
             
-
             <label className='reminder'>
-                <input
-                type='checkbox'
-                checked={reminder}
-                onChange={(e) => setReminder(e.target.checked)}
-                />
+                <input type='checkbox' {...register('reminder')} />
                 Sätt påminnelse för framtida doser  
             </label>
 
@@ -200,13 +205,16 @@ export const VaccinationForm = ({
                     Datum för påminnelse
                     <input
                     type='date'
-                    value={reminderDate}
-                    onChange={(e) => setReminderDate(e.target.value)}
-                    required
+                    {...register('reminderDate', {
+                    required: 'Datum för påminnelse krävs',
+                    })}
                     />
+
+                    {errors.reminderDate && (
+                    <span className='form-error'>{errors.reminderDate.message}</span>
+                    )}
                 </label>
             )}
-
             <PrimaryButton type='submit'>{buttonLabel}</PrimaryButton>
         </form>
     );
