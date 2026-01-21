@@ -3,6 +3,13 @@ import { PrimaryButton } from '../Button/Button';
 import type { Vaccination } from '../../models/Vaccinations';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import './EditMainVaccination.scss';
+import { useForm } from 'react-hook-form';
+import { patterns } from '../../validation/validationPatterns';
+
+type EditMainVaccinationFormValues = {
+    vaccineName: string;
+    totalDoses: string;
+};
 
 interface Props {
     vaccination: Vaccination;
@@ -11,47 +18,57 @@ interface Props {
 
 export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
     const { updateVaccination } = useContext(VaccinationContext);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        } = useForm<EditMainVaccinationFormValues>({
+        defaultValues: {
+            vaccineName: vaccination.vaccineName,
+            totalDoses: vaccination.totalDoses,
+        },
+    });
 
-    const [name, setName] = useState(vaccination.vaccineName);
-    const [totalDoses, setTotalDoses] = useState(vaccination.totalDoses);
-    const [showDoseError, setShowDoseError] = useState(false);
-
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-
-        if (+totalDoses < vaccination.doses.length) {
-            setShowDoseError(true);
-            return;
-        }
-
+    const onSubmit = (data: EditMainVaccinationFormValues) => {
         updateVaccination(vaccination.id, {
-        vaccineName: name,
-        totalDoses,
+            vaccineName: data.vaccineName,
+            totalDoses: data.totalDoses,
         });
 
         onSuccess();
     };
 
     return (
-        <form onSubmit={handleSubmit} className='edit-main-vaccination-form'>
+        <form onSubmit={handleSubmit(onSubmit)} className='edit-main-vaccination-form'>
         <label className='edit-main-vaccination-label'>
             Vaccinationens namn
-            <input value={name} onChange={e => setName(e.target.value)} />
+            <input
+            {...register('vaccineName', {
+                required: 'Vaccinationens namn krävs',
+            })}
+            />
+        {errors.vaccineName && (
+        <span className="form-error">{errors.vaccineName.message}</span>
+        )}
         </label>
 
         <label className='edit-main-vaccination-label'>
             Totala doser
             <input
             type="text"
-            min={vaccination.doses.length}
-            value={totalDoses}
-            onChange={e => setTotalDoses(e.target.value)}
+            {...register('totalDoses', {
+                required: 'Totala doser krävs',
+                pattern: patterns.onlyNumbers,
+                validate: (value) =>
+                +value >= vaccination.doses.length ||
+                'Kan inte vara lägre än befintliga doser',
+            })}
             />
+        {errors.totalDoses && (
+        <span className="form-error">{errors.totalDoses.message}</span>
+        )}
         </label>
 
-        {showDoseError && (
-            <p className='form-error'>Kan inte vara lägre än befintliga doser</p>
-        )}
 
         <PrimaryButton type="submit">Spara</PrimaryButton>
         </form>
