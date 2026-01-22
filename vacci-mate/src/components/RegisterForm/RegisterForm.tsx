@@ -4,7 +4,7 @@ import { PrimaryButton } from '../Button/Button';
 import { BackToStartLink } from '../BackToStartLink/BackToStartLink';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
 import { errorClass } from '../../utils/formUtils';
 
@@ -25,7 +25,7 @@ export const RegisterForm = () => {
         handleSubmit,
         formState: { errors },
         setError,
-        watch,
+        control,
         } = useForm<RegisterFormValues>({
         defaultValues: {
             userName: '',
@@ -33,6 +33,11 @@ export const RegisterForm = () => {
             password: '',
             confirmPassword: '',
         },
+    });
+
+    const password = useWatch({
+        control,
+        name: 'password',
     });
 
     const onSubmit = (data: RegisterFormValues) => {
@@ -126,7 +131,7 @@ export const RegisterForm = () => {
             {...formRegister('confirmPassword', {
                 required: 'Bekräfta lösenord krävs',
                 validate: (value) =>
-                value === watch('password') || 'Lösenorden matchar inte',
+                value === password || 'Lösenorden matchar inte',
             })}
             />
 
