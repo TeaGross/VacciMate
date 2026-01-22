@@ -1,8 +1,6 @@
 import emailjs from '@emailjs/browser';
 import { formatDate } from '../utils/formatDate';
 
-console.log('🔥 sendReminderEmail file loaded');
-
 export function sendReminderEmail(reminder: {
     email: string;
     vaccineName: string;

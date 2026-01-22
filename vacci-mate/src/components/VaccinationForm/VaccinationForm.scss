@@ -17,11 +17,6 @@
         flex-direction: column;
         font-size: 0.9rem;
         gap: 0.5rem;
-
-        .hint{
-            font-size: 0.7rem;
-            color: red;
-        }
     }
 
     input,
@@ -32,6 +27,10 @@
         border: 2px solid #3118118e;
         padding: 0 0.5rem;
         font-family: inherit;
+    }
+
+    .input-error {
+        border: 2px solid red;
     }
 
     textarea {
@@ -69,6 +68,7 @@
         margin-top: 1rem;
     }
     }
+
 
     @media screen and (min-width: 768px) {
     .add-vaccination-form {
