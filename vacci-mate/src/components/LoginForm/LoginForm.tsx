@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
+import { errorClass } from '../../utils/formUtils';
 
 type LoginFormValues = {
     email: string;
@@ -43,6 +44,7 @@ export const LoginForm = () => {
             E-postadress
                 <input
                 type='text'
+                className={errorClass(errors.email)}
                 placeholder='E-postadress'
                 {...register('email', {
                 required: 'E-post krävs',
@@ -59,6 +61,7 @@ export const LoginForm = () => {
             Lösenord
                 <input
                 type='password'
+                className={errorClass(errors.password)}
                 placeholder='Lösenord'
                 {...register('password', {
                 required: 'Lösenord krävs',

@@ -5,6 +5,8 @@ import { VaccinationContext } from '../../context/VaccinationContext';
 import './EditMainVaccination.scss';
 import { useForm } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
+import { validators } from '../../validation/validators';
+import { errorClass } from '../../utils/formUtils';
 
 type EditMainVaccinationFormValues = {
     vaccineName: string;
@@ -43,6 +45,7 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
         <label className='edit-main-vaccination-label'>
             Vaccinationens namn
             <input
+            className={errorClass(errors.vaccineName)}
             {...register('vaccineName', {
                 required: 'Vaccinationens namn krävs',
             })}
@@ -56,12 +59,14 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             Totala doser
             <input
             type='text'
+            className={errorClass(errors.totalDoses)}
             {...register('totalDoses', {
                 required: 'Totala doser krävs',
                 pattern: patterns.onlyNumbers,
-                validate: (value) =>
-                +value >= vaccination.doses.length ||
-                'Kan inte vara lägre än befintliga doser',
+                validate: {
+                minValue: validators.minValue(1),
+                notLowerThan: validators.notLowerThan(vaccination.doses.length, 'Kan inte vara lägre än befintliga doser'),
+            }
             })}
             />
             {errors.totalDoses && (

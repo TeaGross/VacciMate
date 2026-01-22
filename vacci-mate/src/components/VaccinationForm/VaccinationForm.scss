@@ -29,6 +29,10 @@
         font-family: inherit;
     }
 
+    .input-error {
+        border: 2px solid red;
+    }
+
     textarea {
         height: auto;
         min-height: 4rem;
@@ -64,6 +68,7 @@
         margin-top: 1rem;
     }
     }
+
 
     @media screen and (min-width: 768px) {
     .add-vaccination-form {

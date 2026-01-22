@@ -7,6 +7,8 @@ import { createReminder } from '../../services/reminderService';
 import { AuthContext } from '../../context/AuthContext';
 import { useForm, useWatch } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
+import { validators } from '../../validation/validators';
+import { errorClass } from '../../utils/formUtils';
 
 type VaccinationFormValues = {
     vaccineName: string;
@@ -109,6 +111,7 @@ export const VaccinationForm = ({
                 Vaccinationens namn
                 <input 
                 type='text'
+                className={errorClass(errors.vaccineName)}
                 placeholder='Vaccinationens namn'
                 disabled={isVaccineLocked}
                 {...register('vaccineName', {
@@ -130,6 +133,7 @@ export const VaccinationForm = ({
                 Datum
                 <input 
                 type='date'
+                className={errorClass(errors.date)}
                 {...register('date', {
                     required: 'Datum krävs'
                 })} />
@@ -141,11 +145,14 @@ export const VaccinationForm = ({
                     Dosnummer
                     <input
                     type='text'
+                    className={errorClass(errors.doseNumber)}
                     {...register('doseNumber', {
                         required: 'Dosnummer krävs',
                         pattern: patterns.onlyNumbers,
-                        validate: (value) =>
-                        !totalDoses || +value <= +totalDoses || 'Kan ej vara högre än totala doser',
+                        validate: {
+                            minValue: validators.minValue(1),
+                            MaxValue: validators.maxValue(totalDoses, 'Kan ej vara högre än totala doser')
+                        }
                     })}
                     />
 
@@ -158,9 +165,11 @@ export const VaccinationForm = ({
                     Totala doser
                     <input
                     type='text'
+                    className={errorClass(errors.totalDoses)}
                     {...register('totalDoses', {
                         required: 'Totala doser krävs',
                         pattern: patterns.onlyNumbers,
+                        validate: validators.minValue(1),
                     })}
                     disabled={isVaccineLocked}
                     />
@@ -205,9 +214,12 @@ export const VaccinationForm = ({
                     Datum för påminnelse
                     <input
                     type='date'
+                    className={errorClass(errors.reminderDate)}
                     {...register('reminderDate', {
                     required: 'Datum för påminnelse krävs',
+                    validate: validators.notBeforeToday(),
                     })}
+
                     />
 
                     {errors.reminderDate && (

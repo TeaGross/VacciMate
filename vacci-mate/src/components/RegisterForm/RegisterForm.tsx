@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
+import { errorClass } from '../../utils/formUtils';
 
 
 type RegisterFormValues = {
@@ -66,6 +67,7 @@ export const RegisterForm = () => {
         Användarnamn
             <input
             type='text'
+            className={errorClass(errors.userName)}
             placeholder='Användarnamn'
             {...formRegister('userName', {
                 required: 'Användarnamn krävs',
@@ -81,6 +83,7 @@ export const RegisterForm = () => {
         E-postadress
             <input
             type='email'
+            className={errorClass(errors.email)}
             placeholder='E-postadress'
             {...formRegister('email', {
                 required: 'E-post krävs',
@@ -100,6 +103,7 @@ export const RegisterForm = () => {
             </small>
             <input
             type='password'
+            className={errorClass(errors.password)}
             placeholder='Lösenord'
             {...formRegister('password', {
                 required: 'Lösenord krävs',
@@ -117,6 +121,7 @@ export const RegisterForm = () => {
         Bekräfta lösenord
             <input
             type='password'
+            className={errorClass(errors.confirmPassword)}
             placeholder='Bekräfta lösenord'
             {...formRegister('confirmPassword', {
                 required: 'Bekräfta lösenord krävs',
