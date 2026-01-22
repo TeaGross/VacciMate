@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { FeatureList } from '../../components/FeatureList/FeatureList';
 import { RegisterBox } from '../../components/RegisterBox/RegisterBox';
 import './Start.scss';
+import { AuthContext } from '../../context/AuthContext';
 
 export const StartPage = () => {
+  const {activeUser} = useContext(AuthContext);
   return (
     <>
     <div className='start-page'>
@@ -13,7 +16,15 @@ export const StartPage = () => {
         <FeatureList></FeatureList>
       </div>
       
-      <RegisterBox></RegisterBox>
+      {activeUser ? (
+        <RegisterBox
+          title={`Välkommen ${activeUser.username}!`}
+          buttonText="Till mina vaccinationer"
+          to="/home"
+        />
+      ) : (
+        <RegisterBox />
+      )}
     </div>
     </>
   );

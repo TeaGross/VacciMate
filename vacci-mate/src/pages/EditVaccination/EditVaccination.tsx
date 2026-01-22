@@ -1,63 +1,54 @@
-import './EditVaccination.scss';
 import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
-import { deleteVaccinationDose, getVaccinations, updateVaccinationDose } from '../../utils/VaccinationStorage';
-import { AddVaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
-import { SecondaryButton } from '../../components/Button/Button';
-import type { VaccinationDose } from '../../models/Vaccinations';
+import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
+import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const EditVaccinationPage = () => {
-  const { vaccinations, setVaccinations } = useContext(VaccinationContext);
+  const { vaccinations } = useContext(VaccinationContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Find dose to edit
   const doseToEdit = vaccinations
-    .flatMap(v => v.doses.map(d => ({ ...d, vaccineName: v.vaccineName, totalDoses: v.totalDoses, vaccinationId: v.id })))
-    .find(d => d.id === id);
-
-  const handleEditSubmit = (updatedDose: VaccinationDose) => {
-    if (id) {
-      updateVaccinationDose(id, updatedDose);
-      setVaccinations(getVaccinations());
-
-      if (doseToEdit?.vaccinationId) {
-        navigate(`/home/${doseToEdit.vaccinationId}`);
-      } else {
-        navigate('/home');
-      }
-    }
-  };
-
-  const handleDelete = () => {
-    if (id && confirm('Är du säker på att du vill ta bort denna dos?')) {
-      deleteVaccinationDose(id);
-      setVaccinations(getVaccinations());
-      
-      if (doseToEdit?.vaccinationId) {
-        navigate(`/home/${doseToEdit.vaccinationId}`);
-      } else {
-        navigate('/home');
-      }
-    }
-  };
-
-  if (!doseToEdit) {
-    console.log(id, doseToEdit);
-    return <h2>Vaccination not found</h2>;
+  .flatMap(v => v.doses)
+  .find(d => d.id === id);
+  
+  const parentVaccination = vaccinations.find(v =>
+    v.doses.some(d => d.id === id)
+  );
+  
+  if (!doseToEdit || !parentVaccination) {
+    return <h2>Vaccinationen kunde ej hittas</h2>;
   }
+  
+  const items: BreadcrumbItem[] = [
+    { label: 'Hem', path: '/home' },
+    { label: parentVaccination.vaccineName, path: `/home/${parentVaccination.id}` },
+    { label: 'Redigera vaccination' },
+  ];
 
 
   return (
     <>
-      <h2>Edit vaccination</h2>
-      <AddVaccinationForm 
-        initialData={doseToEdit}
-        onSubmit={handleEditSubmit}
+    <Breadcrumb items={items}/>
+    <div className='page'>
+      <h2>Redigera vaccination</h2>
+      <VaccinationForm 
+        initialVaccine={{
+          vaccineName: parentVaccination.vaccineName,
+          totalDoses: parentVaccination.totalDoses,
+        }}
+        initialDose={doseToEdit}
         buttonLabel="Uppdatera"
+        onSuccess={() => {
+          if (parentVaccination?.id) {
+            navigate(`/home/${parentVaccination.id}`);
+          } else {
+            navigate('/home');
+          }
+        }}
       />
-        <SecondaryButton onClick={handleDelete}>Ta bort dos</SecondaryButton>
+    </div>
     </>
   );
 };

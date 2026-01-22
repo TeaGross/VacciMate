@@ -1,9 +1,12 @@
-.add-vaccination-page {
+
+.welcome-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    h2 {
+    .welcome-info {
+        text-align: center;
         font-family: 'Merriweather', serif;
+        max-width: 35rem;
     }
 }

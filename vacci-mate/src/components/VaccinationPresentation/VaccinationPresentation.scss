@@ -1,0 +1,107 @@
+.vaccination-presentation-page {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    }
+
+    .vaccination-presentation {
+    width: 100%;
+    max-width: 55rem;
+    background-color: white;
+    border: 2px solid #3118118e;
+    border-radius: 0.7rem;
+    padding: 1rem;
+    font-family: 'Merriweather', serif;
+
+    .main-vaccination-container {
+        display: flex;
+        justify-content: space-between;
+
+        .name-doses-container {
+            h2 {
+                font-family: 'Inter', sans-serif;
+                font-size: 1.6rem;
+                margin-bottom: 0;
+            }
+        
+            p {
+                margin-top: 0.4rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .edit-main-vaccination-btn {
+            height: 2rem;
+            bottom: 0;
+        }
+    }
+
+
+    }
+
+    .dose-presentation-container {
+        border: 2px solid #3118118e;
+        border-radius: 0.7rem;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        background-color: white;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        .main-dose {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            span {
+            margin: 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+            .dose-actions {
+                display: flex;
+                gap: 0.6rem;
+                margin-top: 0.6rem;
+            }
+        }
+
+        .dose-comment {
+            padding-top: 0.4rem;
+            font-size: 0.9rem;
+            color: #333;
+        }
+    }
+
+
+    .add-dose-wrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    @media screen and (min-width: 786px) {
+    .dose-presentation-container {
+        flex-direction: column;
+        justify-content: space-between;
+
+        .main-dose {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+                flex: 1;
+            }
+        }
+
+        .dose-actions {
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+    }
+
+}

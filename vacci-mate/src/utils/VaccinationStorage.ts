@@ -1,69 +1,41 @@
-import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
+import { demoVaccinations } from '../data/MockVaccinations';
+import type { Vaccination } from '../models/Vaccinations';
 
-const STORAGE_KEY = 'vaccinations';
+const STORAGE_KEY = 'vaccinationsByUser';
+const DEMO_USER_ID = 'demo-user';
 
-/** Hämta alla vaccinationer */
-export const getVaccinations = (): Vaccination[] => {
+type VaccinationMap = {
+    [userId: string]: Vaccination[];
+    };
+
+    const getAll = (): VaccinationMap => {
     const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-};
+    return data ? JSON.parse(data) : {};
+    };
 
-/** Spara alla vaccinationer */
-const saveAll = (vaccinations: Vaccination[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(vaccinations));
-};
+    const saveAll = (map: VaccinationMap) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+    };
 
-/** Lägg till en dos till en vaccination (eller skapa ny) */
-export const addVaccinationDose = (
-    vaccineName: string,
-    totalDoses: string,
-    dose: VaccinationDose
-    ): Vaccination[] => {
-    const vaccinations = getVaccinations();
 
-    const existingVaccination = vaccinations.find(
-        (v) => v.vaccineName.toLowerCase() === vaccineName.toLowerCase()
-    );
+    export const getVaccinationsForUser = (userId: string): Vaccination[] => {
+        const map = getAll();
 
-    if (existingVaccination) {
-        existingVaccination.doses.push(dose);
-    } else {
-        const newVaccination: Vaccination = {
-            id: crypto.randomUUID(),
-            vaccineName,
-            totalDoses,
-            doses: [dose],
-        };
-        vaccinations.push(newVaccination);
-    }
-
-    saveAll(vaccinations);
-    return vaccinations;
-};
-
-/** Uppdatera en dos */
-export const updateVaccinationDose = (doseId: string, updatedDose: VaccinationDose) => {
-    const vaccinations = getVaccinations();
-    
-    vaccinations.forEach(vaccination => {
-        const doseIndex = vaccination.doses.findIndex(d => d.id === doseId);
-        if (doseIndex !== -1) {
-            vaccination.doses[doseIndex] = updatedDose;
+        // 👇 Seed demo-data första gången
+        if (!map[userId] && userId === DEMO_USER_ID) {
+            map[userId] = demoVaccinations;
+            saveAll(map);
+            return demoVaccinations;
         }
-    });
-    
-    saveAll(vaccinations);
-};
 
-/** Ta bort en dos */
-export const deleteVaccinationDose = (doseId: string) => {
-    const vaccinations = getVaccinations();
-    
-    vaccinations.forEach(vaccination => {
-        vaccination.doses = vaccination.doses.filter(d => d.id !== doseId);
-    });
-    
-    // Ta bort vaccinationen helt om det inte finns några doser kvar
-    const filtered = vaccinations.filter(v => v.doses.length > 0);
-    saveAll(filtered);
+        return map[userId] ?? [];
+    };
+
+    export const saveVaccinationsForUser = (
+    userId: string,
+    vaccinations: Vaccination[]
+    ) => {
+    const map = getAll();
+    map[userId] = vaccinations;
+    saveAll(map);
 };

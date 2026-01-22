@@ -6,4 +6,11 @@
     justify-content: space-between;
     height: 10vh;
     padding-right: 10px;
+
+    .btn-container {
+        display: flex;
+        gap: 0.5rem;
+
+    }
+
 }

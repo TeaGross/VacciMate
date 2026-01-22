@@ -1,12 +1,20 @@
-import { AddVaccinationForm } from '../../components/AddVaccinationForm/VaccinationForm';
-import './AddVaccination.scss';
+import { useNavigate } from 'react-router';
+import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
+import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
 
 export const AddVaccinationPage = () => {
+    const navigate = useNavigate();
+
+    const items: BreadcrumbItem[] = [
+        { label: 'Hem', path: '/home' },
+        { label: 'Lägg till en vaccination' },
+        ]; 
     return (
     <>
-    <div className='add-vaccination-page'>
+    <Breadcrumb items={items}></Breadcrumb>
+    <div className='page'>
         <h2>Lägg till en vaccination</h2>
-        <AddVaccinationForm></AddVaccinationForm>
+        <VaccinationForm onSuccess={() => navigate('/home')}></VaccinationForm>
     </div>
 
     </>
