@@ -133,15 +133,17 @@ export const Layout = () => {
     };
 
     const deleteVaccinationDose = (doseId: string) => {
-        const updated = vaccinations
-            .map(v => ({
+        const updated = vaccinations.map(v => ({
             ...v,
             doses: v.doses.filter(d => d.id !== doseId),
-            }))
-            .filter(v => v.doses.length > 0);
-
+        }));
         updateVaccinations(updated);
-        };
+    };
+
+    const deleteVaccination = (vaccinationId: string) => {
+        const updated = vaccinations.filter(v => v.id !== vaccinationId);
+        updateVaccinations(updated);
+    };
 
         console.log('user:', users);
         console.log('Active user:', activeUser);
@@ -157,6 +159,7 @@ export const Layout = () => {
                 updateVaccinationDose,
                 updateVaccination,
                 deleteVaccinationDose,
+                deleteVaccination
             }}>
                 <div className='vacci-mate-layout-container'>
                     <Header></Header>

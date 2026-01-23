@@ -41,6 +41,15 @@
                 width: 100%;
                 max-width: 15rem;
             }
+
+            .add-and-delete-btn {
+                display: flex;
+                gap: 0.4rem;
+
+                .delete-vaccination-series-btn {
+                    width: 43%;
+                }
+            }
         }
     }
     }
