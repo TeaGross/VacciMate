@@ -29,17 +29,12 @@
             border: 2px solid #3118118e;
         } 
 
-        .hint {
-            font-size: 0.8rem;
-        }
 
         .input-error {
             border: 2px solid red;
         }
     }
 }
-
-//TODO: styling för error
 
 @media screen and (min-width: 768px) {
     .register-form {

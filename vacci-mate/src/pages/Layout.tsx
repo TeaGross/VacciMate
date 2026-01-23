@@ -33,8 +33,6 @@ export const Layout = () => {
             return { success: false, error: 'EMAIL_EXISTS' };
         }
 
-        //TODO: inte kunna registrera om användarnamn redan finns
-
         const newUser: User = {
         id: crypto.randomUUID(),
         email,

@@ -108,7 +108,7 @@ export const VaccinationForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='add-vaccination-form'>
             <label>
-                Vaccinationens namn
+                Vaccinationens namn*
                 <input 
                 type='text'
                 className={errorClass(errors.vaccineName)}
@@ -130,7 +130,9 @@ export const VaccinationForm = ({
             </label>
 
             <label>
-                Datum
+                Datum*
+                <small className='hint'>Ange datum i formatet ÅÅÅÅ-MM-DD</small>
+
                 <input 
                 type='date'
                 className={errorClass(errors.date)}
@@ -142,7 +144,7 @@ export const VaccinationForm = ({
             </label>
             <div className='dose-container'>
                 <label>
-                    Dosnummer
+                    Dosnummer*
                     <input
                     type='text'
                     className={errorClass(errors.doseNumber)}
@@ -162,7 +164,7 @@ export const VaccinationForm = ({
     
                 </label>
                 <label>
-                    Totala doser
+                    Totala doser*
                     <input
                     type='text'
                     className={errorClass(errors.totalDoses)}
@@ -197,7 +199,7 @@ export const VaccinationForm = ({
             <label>
                 Kommentar
                 <textarea
-                placeholder='Kommentar'
+                placeholder='Biverkningar, upplevelse eller annan anteckning'
                 {...register('comment')} 
             />
 
@@ -206,12 +208,12 @@ export const VaccinationForm = ({
             
             <label className='reminder'>
                 <input type='checkbox' {...register('reminder')} />
-                Sätt påminnelse för framtida doser  
+                Sätt påminnelse för framtida dos  
             </label>
 
             {reminder && (
                 <label>
-                    Datum för påminnelse
+                    Datum för påminnelse*
                     <input
                     type='date'
                     className={errorClass(errors.reminderDate)}

@@ -15,7 +15,9 @@
 
     .main-vaccination-container {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-bottom: 1rem;
 
         .name-doses-container {
             h2 {
@@ -30,13 +32,17 @@
             }
         }
 
-        .edit-main-vaccination-btn {
-            height: 2rem;
-            bottom: 0;
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            button{
+                height: 2rem;
+                width: 100%;
+                max-width: 15rem;
+            }
         }
     }
-
-
     }
 
     .dose-presentation-container {
@@ -67,6 +73,10 @@
                 display: flex;
                 gap: 0.6rem;
                 margin-top: 0.6rem;
+                
+                // button {
+                //     width: 12rem;
+                // }
             }
         }
 
@@ -77,31 +87,25 @@
         }
     }
 
+    @media screen and (min-width: 768px) {
+        .vaccination-presentation-page{
+            .vaccination-presentation {
+                .main-vaccination-container {
+                    flex-direction: row;
+                    justify-content: space-between;
+                }    
 
-    .add-dose-wrapper {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    @media screen and (min-width: 786px) {
-    .dose-presentation-container {
-        flex-direction: column;
-        justify-content: space-between;
-
-        .main-dose {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-
-            span {
-                flex: 1;
             }
         }
+        .dose-presentation-container {
+            .main-dose {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
 
-        .dose-actions {
-            margin-top: 0;
-            flex-shrink: 0;
+                span {
+                    flex: 1;
+                }
+            }
         }
     }
-
-}
