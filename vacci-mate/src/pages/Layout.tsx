@@ -13,6 +13,10 @@ export type RegisterResult =
     | { success: true }
     | { success: false; error: 'EMAIL_EXISTS' | 'USERNAME_EXISTS' };
 
+export type LoginResult =
+    |{ success: true }
+    | { success: false; error: 'EMAIL_NOT_FOUND' | 'WRONG_PASSWORD' };
+
 export const Layout = () => {
     const [users, setUsers] = useState<User[]>(() => getUsers());
     const [activeUser, setActiveUser] = useState<User | null>(() => getActiveUser());
@@ -55,17 +59,23 @@ export const Layout = () => {
     };
 
     const login = (email: string, password: string) => {
-        const user = users.find(
-        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+        const userByEmail = users.find(
+            u => u.email.toLowerCase() === email.toLowerCase()
         );
-        if (!user) {
-            return false;
+
+        if (!userByEmail) {
+            return { success: false, error: 'EMAIL_NOT_FOUND' };
         }
 
-        setActiveUser(user);
-        saveActiveUser(user);
-        setVaccinations(getVaccinationsForUser(user.id));
-        return true;
+        if (userByEmail.password !== password) {
+            return { success: false, error: 'WRONG_PASSWORD' };
+        }
+
+        setActiveUser(userByEmail);
+        saveActiveUser(userByEmail);
+        setVaccinations(getVaccinationsForUser(userByEmail.id));
+
+        return { success: true };
     };
 
     const logout = () => {

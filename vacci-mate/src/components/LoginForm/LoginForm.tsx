@@ -20,6 +20,7 @@ export const LoginForm = () => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
         } = useForm<LoginFormValues>({
         defaultValues: {
@@ -29,10 +30,22 @@ export const LoginForm = () => {
     });
 
     const onSubmit = (data: LoginFormValues) => {
-        const success = login(data.email, data.password);
+        const result = login(data.email, data.password);
 
-        if (success) {
-            navigate('/home');
+        if (!result.success) {
+            if (result.error === 'EMAIL_NOT_FOUND') {
+            setError('email', {
+                message: 'Det finns inget konto med denna e-postadress',
+            });
+            }
+
+            if (result.error === 'WRONG_PASSWORD') {
+            setError('password', {
+                message: 'Lösenordet stämmer inte',
+            });
+            }
+
+            return;
         }
     };
 

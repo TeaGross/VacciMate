@@ -129,7 +129,7 @@ export const RegisterForm = () => {
             className={errorClass(errors.confirmPassword)}
             placeholder='Bekräfta lösenord'
             {...formRegister('confirmPassword', {
-                required: 'Bekräfta lösenord krävs',
+                required: 'Bekräfta lösenordet',
                 validate: (value) =>
                 value === password || 'Lösenorden matchar inte',
             })}
