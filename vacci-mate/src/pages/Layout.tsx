@@ -58,7 +58,7 @@ export const Layout = () => {
         return { success: true };
     };
 
-    const login = (email: string, password: string) => {
+    const login = (email: string, password: string): LoginResult => {
         const userByEmail = users.find(
             u => u.email.toLowerCase() === email.toLowerCase()
         );

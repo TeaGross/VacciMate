@@ -3,7 +3,6 @@ import './LoginForm.scss';
 import { PrimaryButton } from '../Button/Button';
 import { BackToStartLink } from '../BackToStartLink/BackToStartLink';
 import { AuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
 import { errorClass } from '../../utils/formUtils';
@@ -15,7 +14,6 @@ type LoginFormValues = {
 
 export const LoginForm = () => {
     const {login} = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const {
         register,
@@ -50,44 +48,59 @@ export const LoginForm = () => {
     };
 
     return (
-        <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
-            <h2>Logga in</h2>
+        <div className='login-container'>
+            <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
+                <h2>Logga in</h2>
 
-            <label>
-            E-postadress
-                <input
-                type='text'
-                className={errorClass(errors.email)}
-                placeholder='E-postadress'
-                {...register('email', {
-                required: 'E-post krävs',
-                pattern: patterns.email,
-                })}
-                />
+                <label>
+                E-postadress
+                    <input
+                    type='text'
+                    className={errorClass(errors.email)}
+                    placeholder='E-postadress'
+                    {...register('email', {
+                    required: 'E-post krävs',
+                    pattern: patterns.email,
+                    })}
+                    />
 
-                {errors.email && (
-                    <span className='form-error'>{errors.email.message}</span>
-                )}
-            </label>
+                    {errors.email && (
+                        <span className='form-error'>{errors.email.message}</span>
+                    )}
+                </label>
 
-            <label>
-            Lösenord
-                <input
-                type='password'
-                className={errorClass(errors.password)}
-                placeholder='Lösenord'
-                {...register('password', {
-                required: 'Lösenord krävs',
-                })}
-                />
+                <label>
+                Lösenord
+                    <input
+                    type='password'
+                    className={errorClass(errors.password)}
+                    placeholder='Lösenord'
+                    {...register('password', {
+                    required: 'Lösenord krävs',
+                    })}
+                    />
 
-                {errors.password && (
-                    <span className='form-error'>{errors.password.message}</span>
-                )}
-            </label>
+                    {errors.password && (
+                        <span className='form-error'>{errors.password.message}</span>
+                    )}
+                </label>
 
-            <PrimaryButton type='submit'>Logga in</PrimaryButton>
-            <BackToStartLink></BackToStartLink>
-        </form>
+                <PrimaryButton type='submit'>Logga in</PrimaryButton>
+                <BackToStartLink></BackToStartLink>
+            </form>
+            <div className="demo-hint">
+                <p className="demo-subtle">
+                    Tips! Använd demo-kontot för att snabbt se ett färdigt flöde,
+                    eller registrera ett eget konto för att börja från början.
+                </p>
+                <details>
+                <summary><strong>Visa demo-inloggning</strong></summary>
+                <span className='demo-details'>
+                    <span><strong>E-post:</strong> test@vaccimate.se</span>
+                    <span><strong> Lösenord:</strong> Test123</span>
+                </span>
+                </details>
+            </div>
+        </div>
     );
 };

@@ -99,6 +99,7 @@ export const RegisterForm = () => {
             {errors.email && (
             <span className='form-error'>{errors.email.message}</span>
             )}
+
         </label>
 
         <label>
@@ -145,6 +146,13 @@ export const RegisterForm = () => {
         </PrimaryButton>
 
         <BackToStartLink></BackToStartLink>
+
+        <div className="demo-subtle">
+            <p>Vill du se hur VacciMate fungerar med färdig data?
+            Gå till Logga in och använd demo-inloggningen.</p>
+            <p>💡 För att få riktiga mejlpåminnelser behöver du registrera ett konto med en giltig e-postadress.</p>
+        </div>
+
     </form>
     );
 };
