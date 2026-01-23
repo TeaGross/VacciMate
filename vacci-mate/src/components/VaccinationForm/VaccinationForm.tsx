@@ -81,18 +81,23 @@ export const VaccinationForm = ({
             reminderDate: data.reminder ? data.reminderDate! : null,
         };
 
+        const reminderDateChanged =
+            data.reminder &&
+            data.reminderDate &&
+            data.reminderDate !== initialDose?.reminderDate;
+
         if (initialDose) {
             updateVaccinationDose(dose);
         } else {
             addVaccinationDose(data.vaccineName, data.totalDoses, dose);
         }
 
-        if (data.reminder && data.reminderDate && activeUser) {
+        if (reminderDateChanged && activeUser) {
             await createReminder({
             id: crypto.randomUUID(),
             doseId: dose.id,
             email: activeUser.email,
-            remindAt: data.reminderDate,
+            remindAt: data.reminderDate!,
             vaccineName: data.vaccineName,
             });
         }
