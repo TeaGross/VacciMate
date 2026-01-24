@@ -18,7 +18,7 @@ export const StartPage = () => {
       
       {activeUser ? (
         <RegisterBox
-          title={`Välkommen ${activeUser.username}!`}
+          title={`Välkommen ${activeUser.firstName}!`}
           buttonText="Till mina vaccinationer"
           to="/home"
         />

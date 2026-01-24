@@ -18,7 +18,10 @@ export type VaccinationContextType = {
     ) => void;
 
     deleteVaccinationDose: (doseId: string) => void;
+    deleteVaccination: (vaccinationId:string) => void;
     };
+
+ 
 
     export const VaccinationContext = createContext<VaccinationContextType>({
     vaccinations: [],
@@ -26,4 +29,5 @@ export type VaccinationContextType = {
     updateVaccinationDose: () => {},
     updateVaccination: () => {},
     deleteVaccinationDose: () => {},
+    deleteVaccination: () => {}
 });

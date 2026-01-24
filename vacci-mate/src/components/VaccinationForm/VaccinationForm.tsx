@@ -44,7 +44,7 @@ export const VaccinationForm = ({
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         reset,
         } = useForm<VaccinationFormValues>({
         defaultValues: {
@@ -81,18 +81,23 @@ export const VaccinationForm = ({
             reminderDate: data.reminder ? data.reminderDate! : null,
         };
 
+        const reminderDateChanged =
+            data.reminder &&
+            data.reminderDate &&
+            data.reminderDate !== initialDose?.reminderDate;
+
         if (initialDose) {
             updateVaccinationDose(dose);
         } else {
             addVaccinationDose(data.vaccineName, data.totalDoses, dose);
         }
 
-        if (data.reminder && data.reminderDate && activeUser) {
+        if (reminderDateChanged && activeUser) {
             await createReminder({
             id: crypto.randomUUID(),
             doseId: dose.id,
             email: activeUser.email,
-            remindAt: data.reminderDate,
+            remindAt: data.reminderDate!,
             vaccineName: data.vaccineName,
             });
         }
@@ -202,8 +207,6 @@ export const VaccinationForm = ({
                 placeholder='Biverkningar, upplevelse eller annan anteckning'
                 {...register('comment')} 
             />
-
-            {/* Lägg till error msg efter regex */}
             </label>
             
             <label className='reminder'>
@@ -229,7 +232,9 @@ export const VaccinationForm = ({
                     )}
                 </label>
             )}
-            <PrimaryButton type='submit'>{buttonLabel}</PrimaryButton>
+            <PrimaryButton type='submit' disabled={isSubmitting}>
+                {isSubmitting ? 'Sparar...' : buttonLabel}
+            </PrimaryButton>
         </form>
     );
 };

@@ -11,7 +11,11 @@ import { getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/Auth
 
 export type RegisterResult =
     | { success: true }
-    | { success: false; error: 'EMAIL_EXISTS' | 'USERNAME_EXISTS' };
+    | { success: false; error: 'EMAIL_EXISTS'};
+
+export type LoginResult =
+    |{ success: true }
+    | { success: false; error: 'EMAIL_NOT_FOUND' | 'WRONG_PASSWORD' };
 
 export const Layout = () => {
     const [users, setUsers] = useState<User[]>(() => getUsers());
@@ -23,11 +27,7 @@ export const Layout = () => {
     
 
     // auth logic
-    const register = (email: string, username: string, password: string): RegisterResult => {
-        
-        if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
-            return { success: false, error: 'USERNAME_EXISTS' };
-        }
+    const register = (email: string, firstName: string, password: string): RegisterResult => {
 
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             return { success: false, error: 'EMAIL_EXISTS' };
@@ -36,7 +36,7 @@ export const Layout = () => {
         const newUser: User = {
         id: crypto.randomUUID(),
         email,
-        username,
+        firstName,
         password,
         };
 
@@ -54,18 +54,24 @@ export const Layout = () => {
         return { success: true };
     };
 
-    const login = (email: string, password: string) => {
-        const user = users.find(
-        u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+    const login = (email: string, password: string): LoginResult => {
+        const userByEmail = users.find(
+            u => u.email.toLowerCase() === email.toLowerCase()
         );
-        if (!user) {
-            return false;
+
+        if (!userByEmail) {
+            return { success: false, error: 'EMAIL_NOT_FOUND' };
         }
 
-        setActiveUser(user);
-        saveActiveUser(user);
-        setVaccinations(getVaccinationsForUser(user.id));
-        return true;
+        if (userByEmail.password !== password) {
+            return { success: false, error: 'WRONG_PASSWORD' };
+        }
+
+        setActiveUser(userByEmail);
+        saveActiveUser(userByEmail);
+        setVaccinations(getVaccinationsForUser(userByEmail.id));
+
+        return { success: true };
     };
 
     const logout = () => {
@@ -133,15 +139,17 @@ export const Layout = () => {
     };
 
     const deleteVaccinationDose = (doseId: string) => {
-        const updated = vaccinations
-            .map(v => ({
+        const updated = vaccinations.map(v => ({
             ...v,
             doses: v.doses.filter(d => d.id !== doseId),
-            }))
-            .filter(v => v.doses.length > 0);
-
+        }));
         updateVaccinations(updated);
-        };
+    };
+
+    const deleteVaccination = (vaccinationId: string) => {
+        const updated = vaccinations.filter(v => v.id !== vaccinationId);
+        updateVaccinations(updated);
+    };
 
         console.log('user:', users);
         console.log('Active user:', activeUser);
@@ -157,6 +165,7 @@ export const Layout = () => {
                 updateVaccinationDose,
                 updateVaccination,
                 deleteVaccinationDose,
+                deleteVaccination
             }}>
                 <div className='vacci-mate-layout-container'>
                     <Header></Header>

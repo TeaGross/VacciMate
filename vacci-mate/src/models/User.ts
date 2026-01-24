@@ -1,6 +1,6 @@
 export interface User {
     id: string;
     email: string;
-    username: string;
+    firstName: string;
     password: string; // TODO: hasha lösenord i produktion?
 }
