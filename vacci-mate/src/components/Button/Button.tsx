@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const PrimaryButton = styled.button`
     display: flex;
     align-items: center;
+    justify-content: center;
     min-height: 2.5rem;
     padding: 0.5rem 1rem;
     background-color: #311811;

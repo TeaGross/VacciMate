@@ -10,7 +10,7 @@ import { errorClass } from '../../utils/formUtils';
 
 
 type RegisterFormValues = {
-    userName: string;
+    firstName: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -28,7 +28,7 @@ export const RegisterForm = () => {
         control,
         } = useForm<RegisterFormValues>({
         defaultValues: {
-            userName: '',
+            firstName: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -41,16 +41,9 @@ export const RegisterForm = () => {
     });
 
     const onSubmit = (data: RegisterFormValues) => {
-        const result = register(data.email, data.userName, data.password);
+        const result = register(data.email, data.firstName, data.password);
 
         if (!result.success) {
-            if (result.error === 'USERNAME_EXISTS') {
-            setError('userName', {
-                type: 'manual',
-                message: 'Användarnamnet är redan taget',
-            });
-            }
-
             if (result.error === 'EMAIL_EXISTS') {
             setError('email', {
                 type: 'manual',
@@ -69,18 +62,18 @@ export const RegisterForm = () => {
         <h2>Skapa konto</h2>
 
         <label>
-        Användarnamn
+        Förnamn
             <input
             type='text'
-            className={errorClass(errors.userName)}
-            placeholder='Användarnamn'
-            {...formRegister('userName', {
+            className={errorClass(errors.firstName)}
+            placeholder='Förnamn'
+            {...formRegister('firstName', {
                 required: 'Användarnamn krävs',
             })}
             />
 
-            {errors.userName && (
-            <span className='form-error'>{errors.userName.message}</span>
+            {errors.firstName && (
+            <span className='form-error'>{errors.firstName.message}</span>
             )}
         </label>
 
@@ -99,6 +92,7 @@ export const RegisterForm = () => {
             {errors.email && (
             <span className='form-error'>{errors.email.message}</span>
             )}
+
         </label>
 
         <label>
@@ -129,7 +123,7 @@ export const RegisterForm = () => {
             className={errorClass(errors.confirmPassword)}
             placeholder='Bekräfta lösenord'
             {...formRegister('confirmPassword', {
-                required: 'Bekräfta lösenord krävs',
+                required: 'Bekräfta lösenordet',
                 validate: (value) =>
                 value === password || 'Lösenorden matchar inte',
             })}
@@ -145,6 +139,13 @@ export const RegisterForm = () => {
         </PrimaryButton>
 
         <BackToStartLink></BackToStartLink>
+
+        <div className="demo-subtle">
+            <p>Vill du se hur VacciMate fungerar med färdig data?
+            Gå till Logga in och använd demo-inloggningen.</p>
+            <p>💡 För att få riktiga mejlpåminnelser behöver du registrera ett konto med en giltig e-postadress.</p>
+        </div>
+
     </form>
     );
 };

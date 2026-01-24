@@ -44,7 +44,7 @@ export const VaccinationForm = ({
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         reset,
         } = useForm<VaccinationFormValues>({
         defaultValues: {
@@ -81,18 +81,23 @@ export const VaccinationForm = ({
             reminderDate: data.reminder ? data.reminderDate! : null,
         };
 
+        const reminderDateChanged =
+            data.reminder &&
+            data.reminderDate &&
+            data.reminderDate !== initialDose?.reminderDate;
+
         if (initialDose) {
             updateVaccinationDose(dose);
         } else {
             addVaccinationDose(data.vaccineName, data.totalDoses, dose);
         }
 
-        if (data.reminder && data.reminderDate && activeUser) {
+        if (reminderDateChanged && activeUser) {
             await createReminder({
             id: crypto.randomUUID(),
             doseId: dose.id,
             email: activeUser.email,
-            remindAt: data.reminderDate,
+            remindAt: data.reminderDate!,
             vaccineName: data.vaccineName,
             });
         }
@@ -108,7 +113,7 @@ export const VaccinationForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='add-vaccination-form'>
             <label>
-                Vaccinationens namn
+                Vaccinationens namn*
                 <input 
                 type='text'
                 className={errorClass(errors.vaccineName)}
@@ -130,7 +135,9 @@ export const VaccinationForm = ({
             </label>
 
             <label>
-                Datum
+                Datum*
+                <small className='hint'>Ange datum i formatet ÅÅÅÅ-MM-DD</small>
+
                 <input 
                 type='date'
                 className={errorClass(errors.date)}
@@ -142,7 +149,7 @@ export const VaccinationForm = ({
             </label>
             <div className='dose-container'>
                 <label>
-                    Dosnummer
+                    Dosnummer*
                     <input
                     type='text'
                     className={errorClass(errors.doseNumber)}
@@ -162,7 +169,7 @@ export const VaccinationForm = ({
     
                 </label>
                 <label>
-                    Totala doser
+                    Totala doser*
                     <input
                     type='text'
                     className={errorClass(errors.totalDoses)}
@@ -197,21 +204,19 @@ export const VaccinationForm = ({
             <label>
                 Kommentar
                 <textarea
-                placeholder='Kommentar'
+                placeholder='Biverkningar, upplevelse eller annan anteckning'
                 {...register('comment')} 
             />
-
-            {/* Lägg till error msg efter regex */}
             </label>
             
             <label className='reminder'>
                 <input type='checkbox' {...register('reminder')} />
-                Sätt påminnelse för framtida doser  
+                Sätt påminnelse för framtida dos  
             </label>
 
             {reminder && (
                 <label>
-                    Datum för påminnelse
+                    Datum för påminnelse*
                     <input
                     type='date'
                     className={errorClass(errors.reminderDate)}
@@ -227,7 +232,9 @@ export const VaccinationForm = ({
                     )}
                 </label>
             )}
-            <PrimaryButton type='submit'>{buttonLabel}</PrimaryButton>
+            <PrimaryButton type='submit' disabled={isSubmitting}>
+                {isSubmitting ? 'Sparar...' : buttonLabel}
+            </PrimaryButton>
         </form>
     );
 };

@@ -14,6 +14,14 @@ h2 {
 
 .form-error {
         color: red;
-        font-size: small;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+}
+
+.hint {
+    font-size: 0.8rem;
+}
+
+input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
 }
