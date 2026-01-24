@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { patterns } from '../../validation/validationPatterns';
 import { errorClass } from '../../utils/formUtils';
+import { Link } from 'react-router';
 
 type LoginFormValues = {
     email: string;
@@ -86,7 +87,9 @@ export const LoginForm = () => {
                 </label>
 
                 <PrimaryButton type='submit'>Logga in</PrimaryButton>
-                <BackToStartLink></BackToStartLink>
+                <Link to='/register' className='back-link'>
+                    <span>Har du inget konto? Registrera dig</span>
+                </Link>
             </form>
             <div className="demo-hint">
                 <p className="demo-subtle">
@@ -101,6 +104,7 @@ export const LoginForm = () => {
                 </span>
                 </details>
             </div>
+                <BackToStartLink></BackToStartLink>
         </div>
     );
 };

@@ -11,7 +11,7 @@ import { getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/Auth
 
 export type RegisterResult =
     | { success: true }
-    | { success: false; error: 'EMAIL_EXISTS' | 'USERNAME_EXISTS' };
+    | { success: false; error: 'EMAIL_EXISTS'};
 
 export type LoginResult =
     |{ success: true }
@@ -27,11 +27,7 @@ export const Layout = () => {
     
 
     // auth logic
-    const register = (email: string, username: string, password: string): RegisterResult => {
-        
-        if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
-            return { success: false, error: 'USERNAME_EXISTS' };
-        }
+    const register = (email: string, firstName: string, password: string): RegisterResult => {
 
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             return { success: false, error: 'EMAIL_EXISTS' };
@@ -40,7 +36,7 @@ export const Layout = () => {
         const newUser: User = {
         id: crypto.randomUUID(),
         email,
-        username,
+        firstName,
         password,
         };
 

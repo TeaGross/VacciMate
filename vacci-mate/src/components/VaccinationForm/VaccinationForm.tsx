@@ -232,7 +232,7 @@ export const VaccinationForm = ({
                     )}
                 </label>
             )}
-            <PrimaryButton type='submit'disabled={isSubmitting}>
+            <PrimaryButton type='submit' disabled={isSubmitting}>
                 {isSubmitting ? 'Sparar...' : buttonLabel}
             </PrimaryButton>
         </form>

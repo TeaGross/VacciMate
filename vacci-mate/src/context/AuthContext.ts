@@ -6,7 +6,7 @@ import type { LoginResult, RegisterResult } from '../pages/Layout';
 type AuthContext = {
     users: User[];
     activeUser: User | null;
-    register: (email: string, username: string, password: string) => RegisterResult;
+    register: (email: string, firstName: string, password: string) => RegisterResult;
     login: (email: string, password: string) => LoginResult;
     logout: () => void;
 };

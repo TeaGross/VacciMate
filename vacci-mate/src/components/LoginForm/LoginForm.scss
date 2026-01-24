@@ -27,10 +27,11 @@
             gap: 0.5rem;
         }
         input {
-            min-width: 15rem;
+            width: 16rem;
             height: 2rem;
             border-radius: 0.7rem;
             border: 2px solid #3118118e;
+            font-size: 1rem;
         }
     
         .input-error {
@@ -43,8 +44,9 @@
         flex-direction: column;
         width: 80%;
         gap: 0.4rem;
+        padding-bottom: 1rem;
 
-        p {
+        .demo-subtle {
             text-align: center;
         }
         .demo-details {
