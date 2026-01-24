@@ -44,7 +44,7 @@ export const VaccinationForm = ({
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         reset,
         } = useForm<VaccinationFormValues>({
         defaultValues: {
@@ -207,8 +207,6 @@ export const VaccinationForm = ({
                 placeholder='Biverkningar, upplevelse eller annan anteckning'
                 {...register('comment')} 
             />
-
-            {/* Lägg till error msg efter regex */}
             </label>
             
             <label className='reminder'>
@@ -234,7 +232,9 @@ export const VaccinationForm = ({
                     )}
                 </label>
             )}
-            <PrimaryButton type='submit'>{buttonLabel}</PrimaryButton>
+            <PrimaryButton type='submit'disabled={isSubmitting}>
+                {isSubmitting ? 'Sparar...' : buttonLabel}
+            </PrimaryButton>
         </form>
     );
 };
