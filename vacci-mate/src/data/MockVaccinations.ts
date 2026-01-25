@@ -47,7 +47,7 @@ export const demoVaccinations: Vaccination[] = [
         doses: [
         {
             id: crypto.randomUUID(),
-            date: '2025-04-12',
+            date: '2024-04-12',
             doseNumber: '1',
             location: 'VaccinDirekt',
             comment: 'Skydd i ca 3 år',
