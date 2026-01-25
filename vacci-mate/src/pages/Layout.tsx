@@ -8,6 +8,7 @@ import type { User } from '../models/User';
 import { AuthContext } from '../context/AuthContext';
 import { getVaccinationsForUser, saveVaccinationsForUser} from '../utils/VaccinationStorage';
 import { getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/AuthStorage';
+import { Footer } from '../components/Footer/Footer';
 
 export type RegisterResult =
     | { success: true }
@@ -176,7 +177,7 @@ export const Layout = () => {
                     <main className="main-content">
                         <Outlet></Outlet>
                     </main>
-                    <footer>footer</footer>
+                    <Footer></Footer>
                 </div>
             </VaccinationContext.Provider>
         </AuthContext.Provider>
