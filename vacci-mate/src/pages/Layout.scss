@@ -1,10 +1,13 @@
 .vacci-mate-layout-container {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     
     .main-content {
-        min-height: 100vh;
+        flex: 1; 
         padding: 1rem;
         background-color: #FAF9F5;
         padding-top: 10vh;
+        padding-bottom: 10vh;
     }
 }
