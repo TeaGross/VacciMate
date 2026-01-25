@@ -135,7 +135,7 @@ export const VaccinationForm = ({
             </label>
 
             <label>
-                Datum*
+                Datum för vaccination*
                 <small className='hint'>Ange datum i formatet ÅÅÅÅ-MM-DD</small>
 
                 <input 
