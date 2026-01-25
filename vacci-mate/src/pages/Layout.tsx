@@ -1,13 +1,14 @@
 import './Layout.scss';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { Header } from '../components/Header/Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 import { VaccinationContext } from '../context/VaccinationContext';
 import type { User } from '../models/User';
 import { AuthContext } from '../context/AuthContext';
 import { getVaccinationsForUser, saveVaccinationsForUser} from '../utils/VaccinationStorage';
 import { getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/AuthStorage';
+import { Footer } from '../components/Footer/Footer';
 
 export type RegisterResult =
     | { success: true }
@@ -25,6 +26,10 @@ export const Layout = () => {
         return user ? getVaccinationsForUser(user.id) : [];
         });
     
+    const location = useLocation();
+        useEffect(() => {
+            window.scrollTo(0, 0);
+    }, [location.pathname]);
 
     // auth logic
     const register = (email: string, firstName: string, password: string): RegisterResult => {
@@ -169,10 +174,10 @@ export const Layout = () => {
             }}>
                 <div className='vacci-mate-layout-container'>
                     <Header></Header>
-                    <main>
+                    <main className="main-content">
                         <Outlet></Outlet>
                     </main>
-                    <footer>footer</footer>
+                    <Footer></Footer>
                 </div>
             </VaccinationContext.Provider>
         </AuthContext.Provider>

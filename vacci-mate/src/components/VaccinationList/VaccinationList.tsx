@@ -7,9 +7,20 @@ import { TertiaryButton } from '../Button/Button';
 export const VaccinationList = () => {
     const { vaccinations } = useContext(VaccinationContext);
 
+    const sortedVaccinations = [...vaccinations].sort((a, b) => {
+        const aLatest = a.doses.at(-1);
+        const bLatest = b.doses.at(-1);
+
+        if (!aLatest || !bLatest) {
+            return 0; 
+        } 
+
+        return new Date(bLatest.date).getTime() - new Date(aLatest.date).getTime();
+    });
+
     return (
         <div className='vaccination-list-page'>
-            {vaccinations.map((v) => {
+            {sortedVaccinations.map((v) => {
                 const latestDose = v.doses.reduce((latest, d) => {
                     if (!latest) {return d;}
                     return new Date(d.date).getTime() > new Date(latest.date).getTime() ? d : latest;
