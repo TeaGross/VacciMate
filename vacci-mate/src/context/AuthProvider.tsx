@@ -62,6 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         saveActiveUser(userByEmail);
         // Tagit bort 
         // setVaccinations(getVaccinationsForUser(userByEmail.id));
+
         return { success: true };
     };
 

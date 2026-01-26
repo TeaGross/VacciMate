@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { VaccinationContext } from './VaccinationContext';
 import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 import {
@@ -11,17 +11,25 @@ export const VaccinationProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const { activeUser } = useContext(AuthContext);
-    const [vaccinations, setVaccinations] = useState<Vaccination[]>(() => {
-        const user = activeUser;
-        return user ? getVaccinationsForUser(user.id) : [];
-        });
+    const [vaccinations, setVaccinations] = useState<Vaccination[]>([]);
 
-    const updateVaccinations = (newVaccinations: Vaccination[]) => {
-        setVaccinations(newVaccinations);
+    useEffect(() => {
+        if (!activeUser) {
+            setVaccinations([]);
+            return;
+        }
 
-        if (activeUser) {
-            saveVaccinationsForUser(activeUser.id, newVaccinations);
-    }
+        const data = getVaccinationsForUser(activeUser.id);
+        setVaccinations(data);
+    }, [activeUser?.id]);
+
+    const updateVaccinations = (updated: Vaccination[]) => {
+        if (!activeUser) {
+            return;
+        }
+        
+        setVaccinations(updated);
+        saveVaccinationsForUser(activeUser.id, updated);
     };
 
     const addVaccinationDose = (vaccineName: string, totalDoses: string, dose: VaccinationDose) => {   

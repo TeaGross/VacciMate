@@ -5,20 +5,20 @@ export type VaccinationContextType = {
     vaccinations: Vaccination[];
 
     addVaccinationDose: (
-        vaccineName: string,
-        totalDoses: string,
-        dose: VaccinationDose
+        _vaccineName: string,
+        _totalDoses: string,
+        _dose: VaccinationDose
     ) => void;
 
-    updateVaccinationDose: (dose: VaccinationDose) => void;
+    updateVaccinationDose: (_dose: VaccinationDose) => void;
 
     updateVaccination: (
-    vaccinationId: string,
-    updates: Partial<Pick<Vaccination, 'vaccineName' | 'totalDoses'>>
+    _vaccinationId: string,
+    _updates: Partial<Pick<Vaccination, 'vaccineName' | 'totalDoses'>>
     ) => void;
 
-    deleteVaccinationDose: (doseId: string) => void;
-    deleteVaccination: (vaccinationId:string) => void;
+    deleteVaccinationDose: (_doseId: string) => void;
+    deleteVaccination: (_vaccinationId:string) => void;
     };
 
  
