@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import type { User } from '../models/User';
-import type { LoginResult, RegisterResult } from '../pages/Layout';
+import type { LoginResult, RegisterResult } from './AuthTypes';
 
 
 type AuthContext = {
