@@ -14,8 +14,8 @@ export const Layout = () => {
 
     return (
         <>
-        <AuthProvider>
-            <VaccinationProvider>
+        <VaccinationProvider>
+            <AuthProvider>
                 <div className='vacci-mate-layout-container'>
                     <Header></Header>
                     <main className="main-content">
@@ -23,8 +23,8 @@ export const Layout = () => {
                     </main>
                     <Footer></Footer>
                 </div>
-            </VaccinationProvider>
-        </AuthProvider>
+            </AuthProvider>
+        </VaccinationProvider>
         </>
     );
 };

@@ -1,35 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { VaccinationContext } from './VaccinationContext';
 import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 import {
     getVaccinationsForUser,
     saveVaccinationsForUser,
 } from '../utils/VaccinationStorage';
-import { AuthContext } from './AuthContext';
 
 export const VaccinationProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const { activeUser } = useContext(AuthContext);
     const [vaccinations, setVaccinations] = useState<Vaccination[]>([]);
+    const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (!activeUser) {
-            setVaccinations([]);
-            return;
-        }
-
-        const data = getVaccinationsForUser(activeUser.id);
+    const loadVaccinationsForUser = (userId: string) => {
+        setCurrentUserId(userId);
+        const data = getVaccinationsForUser(userId);
         setVaccinations(data);
-    }, [activeUser?.id]);
+    };
 
-    const updateVaccinations = (updated: Vaccination[]) => {
-        if (!activeUser) {
+    const clearVaccinations = () => {
+        setCurrentUserId(null);
+        setVaccinations([]);
+    };
+
+    const updateVaccinations = (newVaccinations: Vaccination[]) => {
+        setVaccinations(newVaccinations);
+
+        if (!currentUserId) {
             return;
         }
-        
-        setVaccinations(updated);
-        saveVaccinationsForUser(activeUser.id, updated);
+
+        saveVaccinationsForUser(currentUserId, newVaccinations);
     };
 
     const addVaccinationDose = (vaccineName: string, totalDoses: string, dose: VaccinationDose) => {   
@@ -100,6 +101,8 @@ export const VaccinationProvider: React.FC<{ children: React.ReactNode }> = ({
     <VaccinationContext.Provider
         value={{
             vaccinations,
+            loadVaccinationsForUser,
+            clearVaccinations,
             addVaccinationDose,
             updateVaccinationDose,
             updateVaccination,

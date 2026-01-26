@@ -4,6 +4,9 @@ import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 export type VaccinationContextType = {
     vaccinations: Vaccination[];
 
+    loadVaccinationsForUser: (_userId: string) => void;
+    clearVaccinations: () => void;
+
     addVaccinationDose: (
         _vaccineName: string,
         _totalDoses: string,
@@ -21,10 +24,10 @@ export type VaccinationContextType = {
     deleteVaccination: (_vaccinationId:string) => void;
     };
 
- 
-
     export const VaccinationContext = createContext<VaccinationContextType>({
     vaccinations: [],
+    loadVaccinationsForUser: () => {},
+    clearVaccinations: () => {},
     addVaccinationDose: () => {},
     updateVaccinationDose: () => {},
     updateVaccination: () => {},

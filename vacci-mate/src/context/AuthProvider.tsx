@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import type { User } from '../models/User';
 import type { LoginResult, RegisterResult } from './AuthTypes';
 import {getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/AuthStorage';
+import { VaccinationContext } from './VaccinationContext';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
@@ -11,6 +12,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const [activeUser, setActiveUser] = useState<User | null>(() =>
         getActiveUser()
     );
+    const { loadVaccinationsForUser, clearVaccinations } = useContext(VaccinationContext);
+
+    useEffect(() => {
+        if (activeUser) {
+            loadVaccinationsForUser(activeUser.id);
+        }   
+    }, []);
 
     const register = (
         email: string,
@@ -35,12 +43,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setActiveUser(newUser);
         saveActiveUser(newUser);
-
-        // har tagit bort TODO
-        // setVaccinations([]);
-        //         saveVaccinationsForUser(newUser.id, []);
+        loadVaccinationsForUser(newUser.id);
         
-        //         login(email, password)
 
         return { success: true };
     };
@@ -60,16 +64,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setActiveUser(userByEmail);
         saveActiveUser(userByEmail);
-        // Tagit bort 
-        // setVaccinations(getVaccinationsForUser(userByEmail.id));
-
+        loadVaccinationsForUser(userByEmail.id);
         return { success: true };
     };
 
     const logout = () => {
         setActiveUser(null);
         saveActiveUser(null);
-        // tagit bort setVaccinations([]);
+        clearVaccinations();
     };
 
     return (
