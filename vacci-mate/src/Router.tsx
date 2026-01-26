@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 import { HomePage } from './pages/Home/Home';
-import { ErrorPage } from './pages/Error';
+import { ErrorPage } from './pages/Error/Error';
 import { StartPage } from './pages/Start/Start';
 import { VaccinationPage } from './pages/Vaccination/Vaccination';
 import { LoginPage } from './pages/Login/Login';
@@ -75,6 +75,12 @@ export const Router = createBrowserRouter([
                     <ProtectedRoute>
                         <EditVaccinationPage />
                     </ProtectedRoute>
+                ),
+            },
+            {
+                path: '*',
+                element: (
+                    <ErrorPage/>
                 ),
             }
         ]
