@@ -46,12 +46,11 @@ The application is built as a **SPA (Single Page Application)** with a strong fo
 ## ✅ Responsiveness and accessibility
 VacciMate is built with accessibility in mind:
 
-- Does not rely on color alone for validation or error states
-- Clear text-based validation messages
-- Keyboard-accessible interactive elements
-- Semantic HTML to support screen readers
-- Responsive layout tested for mobile, tablet and desktop
-- Focus on readable typography and sufficient contrast
+- Clear text-based validation and error messages
+- Keyboard-accessible and screen reader–friendly forms
+- Semantic HTML with ARIA for form validation (aria-invalid, aria-describedby)
+- Does not rely on color alone for feedback
+- Responsive design for mobile, tablet and desktop
 
 ## 📸 Screenshots 
 ### Desktop View  
