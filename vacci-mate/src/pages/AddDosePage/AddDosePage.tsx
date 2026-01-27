@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
 import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
+import { ErrorPage } from '../Error/Error';
 
 export const AddDosePage = () => {
     const { id } = useParams();
@@ -12,8 +13,8 @@ export const AddDosePage = () => {
     const vaccination = vaccinations.find(v => v.id === id);
 
     if (!vaccination) {
-        return <p>Vaccinationen hittades inte</p>;
-    }
+        return <ErrorPage message='Den här vaccinationen verkar ha tagits bort eller så är länken inte längre giltig.'/>;
+    } 
 
     const items: BreadcrumbItem[] = [
         { label: 'Hem', path: '/home' },

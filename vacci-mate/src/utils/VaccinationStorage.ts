@@ -19,16 +19,23 @@ type VaccinationMap = {
 
 
     export const getVaccinationsForUser = (userId: string): Vaccination[] => {
-        const map = getAll();
+        try {
+            const map = getAll();
 
-        // 👇 Seed demo-data första gången
-        if (!map[userId] && userId === DEMO_USER_ID) {
-            map[userId] = demoVaccinations;
-            saveAll(map);
-            return demoVaccinations;
+            // Seed vaccinations for demo user on first app load
+            if (!map[userId] && userId === DEMO_USER_ID) {
+                map[userId] = demoVaccinations;
+                saveAll(map);
+                return demoVaccinations;
+            }
+
+            // Return empty array if user has no vaccinations
+            return map[userId] ?? [];
+        } catch (error) {
+            console.error('Failed to read vaccinations from localStorage', error);
+            return [];
         }
 
-        return map[userId] ?? [];
     };
 
     export const saveVaccinationsForUser = (

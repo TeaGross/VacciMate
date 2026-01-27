@@ -4,23 +4,21 @@ import type { User } from '../models/User';
 const USERS_KEY = 'users';
 const ACTIVE_USER_KEY = 'activeUser';
 
-
-
-// export const getUsers = (): User[] => {
-//     const data = localStorage.getItem(USERS_KEY);
-//     return data ? JSON.parse(data) : [];
-// };
-
 export const getUsers = (): User[] => {
-    const data = localStorage.getItem(USERS_KEY);
+    try {
+        const data = localStorage.getItem(USERS_KEY);
 
-    if (!data) {
-        // Första gången appen körs
-        localStorage.setItem(USERS_KEY, JSON.stringify([demoUser]));
+        if (!data) {
+            // Seed demo user on first app load
+            localStorage.setItem(USERS_KEY, JSON.stringify([demoUser]));
+            return [demoUser];
+        }
+
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Failed to read users from localStorage', error);
         return [demoUser];
     }
-
-    return JSON.parse(data);
 };
 
 export const saveUsers = (users: User[]) => {
