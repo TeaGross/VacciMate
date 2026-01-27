@@ -5,6 +5,17 @@ import type { LoginResult, RegisterResult } from './AuthTypes';
 import {getUsers, saveUsers, getActiveUser, saveActiveUser} from '../utils/AuthStorage';
 import { VaccinationContext } from './VaccinationContext';
 
+/**
+ * AuthProvider
+ *
+ * Handles authentication state:
+ * - registered users
+ * - active (logged in) user
+ *
+ * This provider is also responsible for telling the VaccinationProvider
+ * to load or clear vaccinations, based on auth events.
+ */
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
@@ -20,6 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }   
     }, []);
 
+    /**
+     * Registers a new user.
+     * Also sets the new user as active and loads empty vaccinations.
+     */
     const register = (
         email: string,
         firstName: string,
@@ -43,12 +58,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setActiveUser(newUser);
         saveActiveUser(newUser);
+
+        // Explicitly load vaccinations for the new user
         loadVaccinationsForUser(newUser.id);
         
 
         return { success: true };
     };
 
+    /**
+     * Logs in an existing user.
+     * On success, sets the active user and loads their vaccinations.
+     */
     const login = (email: string, password: string): LoginResult => {
         const userByEmail = users.find(
         u => u.email.toLowerCase() === email.toLowerCase()
@@ -64,10 +85,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setActiveUser(userByEmail);
         saveActiveUser(userByEmail);
+
+        // Explicitly load vaccinations for this user
         loadVaccinationsForUser(userByEmail.id);
+
         return { success: true };
     };
 
+    /**
+     * Logs out the current user.
+     * Clears auth and vaccination state.
+     */
     const logout = () => {
         setActiveUser(null);
         saveActiveUser(null);
