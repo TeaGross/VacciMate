@@ -17,16 +17,18 @@ type RegisterFormValues = {
 };
 
 export const RegisterForm = () => {
-    const { register } = useContext(AuthContext);
+    const { register: authRegister } = useContext(AuthContext);
     const navigate = useNavigate();
-
+    
+    
+    
     const {
         register: formRegister,
         handleSubmit,
         formState: { errors },
         setError,
         control,
-        } = useForm<RegisterFormValues>({
+    } = useForm<RegisterFormValues>({
         defaultValues: {
             firstName: '',
             email: '',
@@ -34,6 +36,9 @@ export const RegisterForm = () => {
             confirmPassword: '',
         },
     });
+    
+    //A11y for password
+    const passwordDescribedBy = ['password-hint', errors.password ? 'password-error' : null, ].filter(Boolean).join(' ');
 
     const password = useWatch({
         control,
@@ -41,7 +46,7 @@ export const RegisterForm = () => {
     });
 
     const onSubmit = (data: RegisterFormValues) => {
-        const result = register(data.email, data.firstName, data.password);
+        const result = authRegister(data.email, data.firstName, data.password);
 
         if (!result.success) {
             if (result.error === 'EMAIL_EXISTS') {
@@ -67,13 +72,15 @@ export const RegisterForm = () => {
             type='text'
             className={errorClass(errors.firstName)}
             placeholder='Förnamn'
+            aria-invalid={!!errors.firstName}
+            aria-describedby={errors.firstName ? 'firstName-error' : undefined}
             {...formRegister('firstName', {
                 required: 'Användarnamn krävs',
             })}
             />
 
             {errors.firstName && (
-            <span className='form-error'>{errors.firstName.message}</span>
+            <span id='firstName-error' className='form-error'>{errors.firstName.message}</span>
             )}
         </label>
 
@@ -83,6 +90,8 @@ export const RegisterForm = () => {
             type='email'
             className={errorClass(errors.email)}
             placeholder='E-postadress'
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'email-error' : undefined}
             {...formRegister('email', {
                 required: 'E-post krävs',
                 pattern: patterns.email,
@@ -90,20 +99,22 @@ export const RegisterForm = () => {
             />
 
             {errors.email && (
-            <span className='form-error'>{errors.email.message}</span>
+            <span id='email-error' className='form-error'>{errors.email.message}</span>
             )}
 
         </label>
 
         <label>
         Lösenord
-            <small className='hint'>
+            <small id="password-hint" className='hint'>
             Minst 6 tecken, en bokstav och en siffra
             </small>
             <input
             type='password'
             className={errorClass(errors.password)}
             placeholder='Lösenord'
+            aria-invalid={!!errors.password}
+            aria-describedby={passwordDescribedBy}
             {...formRegister('password', {
                 required: 'Lösenord krävs',
                 pattern: patterns.password,
@@ -111,7 +122,7 @@ export const RegisterForm = () => {
             />
 
             {errors.password && (
-            <span className='form-error'>{errors.password.message}</span>
+            <span id='password-error' className='form-error'>{errors.password.message}</span>
             )}
 
         </label>
@@ -122,6 +133,8 @@ export const RegisterForm = () => {
             type='password'
             className={errorClass(errors.confirmPassword)}
             placeholder='Bekräfta lösenord'
+            aria-invalid={!!errors.confirmPassword}
+            aria-describedby={errors.confirmPassword ? 'confirmPassword-error' : undefined}
             {...formRegister('confirmPassword', {
                 required: 'Bekräfta lösenordet',
                 validate: (value) =>
@@ -130,7 +143,7 @@ export const RegisterForm = () => {
             />
 
             {errors.confirmPassword && (
-            <span className='form-error'>{errors.confirmPassword.message}</span>
+            <span id='confirmPassword-error' className='form-error'>{errors.confirmPassword.message}</span>
             )}
         </label>
 

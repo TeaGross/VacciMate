@@ -1,9 +1,8 @@
 .vaccination-list-page {
+    padding: 0;
 
     .vaccination-card{
         display: block; 
-        text-decoration: none;
-        color: black;
         border-radius: 0.7rem;
         border: 2px solid #3118118e;
         background-color: white;
@@ -11,8 +10,18 @@
         font-family: 'Merriweather', serif;
         font-size: 1rem;
         padding-left: 0.5rem;
-        
 
+        
+        .vaccination-link{
+            display: block;
+            text-decoration: none;
+            color: black;
+
+            &:focus-visible {
+                outline: 3px solid black;
+                outline-offset: 4px;
+            }
+        }
         .card-info {
             display: flex;
             flex-direction: column;
@@ -25,6 +34,7 @@
             p {
                 margin-top: 0.5rem;
             }
+
             .latest-dose {
                 p {
                     display: flex;
@@ -43,7 +53,6 @@
         text-decoration: none;
         color: black;
         display: flex;
-        cursor: pointer;
         position: absolute;
         bottom: 1rem;
         right: 1rem;

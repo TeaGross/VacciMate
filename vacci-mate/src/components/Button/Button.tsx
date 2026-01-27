@@ -4,7 +4,6 @@ export const PrimaryButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.5rem;
     padding: 0.5rem 1rem;
     background-color: #311811;
     border: none;
@@ -15,9 +14,15 @@ export const PrimaryButton = styled.button`
     font-weight: 600;
     cursor: pointer;
     gap: 0.4rem;
+    text-decoration: none;
 
     &:hover{
         background-color: black;
+    }
+
+    &:focus-visible {
+        outline: 3px solid black;
+        outline-offset: 3px;
     }
 
     span {
@@ -57,7 +62,7 @@ export const TertiaryButton = styled(PrimaryButton)`
 export const DeleteButton = styled(PrimaryButton)`
     background-color: #7f1717;
     border: none;
-    color: white;
+    color: FAF9F5;
 
     &:hover{
         background-color: #5b1e1e;

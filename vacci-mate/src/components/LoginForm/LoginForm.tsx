@@ -59,6 +59,8 @@ export const LoginForm = () => {
                     type='text'
                     className={errorClass(errors.email)}
                     placeholder='E-postadress'
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? 'email-error' : undefined}
                     {...register('email', {
                     required: 'E-post krävs',
                     pattern: patterns.email,
@@ -66,7 +68,7 @@ export const LoginForm = () => {
                     />
 
                     {errors.email && (
-                        <span className='form-error'>{errors.email.message}</span>
+                        <span id="email-error" className='form-error'>{errors.email.message}</span>
                     )}
                 </label>
 
@@ -76,13 +78,15 @@ export const LoginForm = () => {
                     type='password'
                     className={errorClass(errors.password)}
                     placeholder='Lösenord'
+                    aria-invalid={!!errors.password}
+                    aria-describedby={errors.password ? 'password-error' : undefined}
                     {...register('password', {
                     required: 'Lösenord krävs',
                     })}
                     />
 
                     {errors.password && (
-                        <span className='form-error'>{errors.password.message}</span>
+                        <span id='password-error' className='form-error'>{errors.password.message}</span>
                     )}
                 </label>
 
