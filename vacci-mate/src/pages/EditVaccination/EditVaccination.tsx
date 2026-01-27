@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import { VaccinationContext } from '../../context/VaccinationContext';
 import { VaccinationForm } from '../../components/VaccinationForm/VaccinationForm';
 import { Breadcrumb, type BreadcrumbItem } from '../../components/Breadcrumb/Breadcrumb';
+import { ErrorPage } from '../Error/Error';
 
 export const EditVaccinationPage = () => {
   const { vaccinations } = useContext(VaccinationContext);
@@ -18,7 +19,7 @@ export const EditVaccinationPage = () => {
   );
   
   if (!doseToEdit || !parentVaccination) {
-    return <h2>Vaccinationen kunde ej hittas</h2>;
+    return <ErrorPage message='Den här vaccinationen verkar ha tagits bort eller så är länken inte längre giltig.'/>;
   }
   
   const items: BreadcrumbItem[] = [

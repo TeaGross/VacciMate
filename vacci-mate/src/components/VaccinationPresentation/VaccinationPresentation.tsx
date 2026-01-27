@@ -6,6 +6,7 @@ import { DeleteButton, PrimaryButton, SecondaryButton } from '../Button/Button';
 import { Breadcrumb, type BreadcrumbItem } from '../Breadcrumb/Breadcrumb';
 import { Modal } from '../Modal/Modal';
 import { EditMainVaccinationForm } from '../EditMainVaccinationForm/EditMainVaccinationForm';
+import { ErrorPage } from '../../pages/Error/Error';
 
 export const VaccinationPresentation = () => {
     const { id } = useParams();
@@ -14,9 +15,8 @@ export const VaccinationPresentation = () => {
     const vaccination = vaccinations.find(v=>v.id === id);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-    // TODO felhantering, om vaccinationen inte kan hittas, göra mer?
     if (!vaccination) {
-        return <p>Vaccinationen kan inte hittas</p>;
+        return <ErrorPage message='Den här vaccinationen verkar ha tagits bort eller så är länken inte längre giltig.'/>;
     } 
 
     const items: BreadcrumbItem[] = [
@@ -24,9 +24,9 @@ export const VaccinationPresentation = () => {
     { label: vaccination?.vaccineName },
     ]; 
 
-
     return (
         <>
+        
         <Breadcrumb items={items}></Breadcrumb>
         <div className='vaccination-presentation-page'>
             <div className='vaccination-presentation'>
@@ -48,8 +48,12 @@ export const VaccinationPresentation = () => {
                             className='delete-vaccination-series-btn'
                                 onClick={() => {
                                     if (confirm('Är du säker på att du vill radera hela vaccinationsserien och alla tillhörande doser?')) {
-                                        deleteVaccination(vaccination.id);
-                                        navigate('/home');
+                                        try {
+                                            deleteVaccination(vaccination.id);
+                                            navigate('/home');
+                                        } catch {
+                                            alert('Något gick fel när vaccinationen skulle tas bort');
+                                            }
                                     }
                                 }} 
                                 >
