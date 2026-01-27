@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { VaccinationContext } from './VaccinationContext';
 import type { Vaccination, VaccinationDose } from '../models/Vaccinations';
 import {
