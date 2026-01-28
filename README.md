@@ -109,8 +109,8 @@ npm install
 npm run dev
 ```
  ## 🎥 Live version & repository link
-[Click here to view the demo](https://medieinstitutet.github.io/fed24d-arbetsmetodik-inl-1-TeaGross/)
-[Click here to view repository](https://github.com/TeaGross/VacciMate)
+- [Click here to view the demo](https://medieinstitutet.github.io/fed24d-arbetsmetodik-inl-1-TeaGross/)
+- [Click here to view repository](https://github.com/TeaGross/VacciMate)
 
 ## ⚠️ Known limitations
 - Authentication is mocked and not secure for production use
@@ -130,7 +130,7 @@ Accessibility and user feedback also played a major role in shaping the applicat
 Finally, the project reinforced the value of **refactoring**. Revisiting and improving existing code was just as important as adding new features. The process highlighted how investing time in clean architecture and thoughtful structure pays off in the long run.
 
 ## 🤝Credits
-This project was developed as my **degree project** at [Medieinstitutet](https://medieinstitutet.se/) as part of the Frontend Developer program.
+VacciMate was developed as my **degree project** at [Medieinstitutet](https://medieinstitutet.se/) as part of the Frontend Developer program.
  
 ## 📝 Author
  
