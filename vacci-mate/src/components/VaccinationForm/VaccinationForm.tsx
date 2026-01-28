@@ -59,6 +59,11 @@ export const VaccinationForm = ({
         },
     });
 
+    // A11y for name, date and dose error
+    const vaccineNameDescribedBy = [errors.vaccineName ? 'vaccineName-error' : null, isVaccineLocked ? 'vaccineName-locked' : null,].filter(Boolean).join(' ');
+    const dateDescribedBy = ['date-hint', errors.date ? 'date-error' : null, ].filter(Boolean).join(' ');
+    const totalDosesDescribedBy = [ errors.totalDoses ? 'totalDoses-error' : null, isVaccineLocked ? 'totalDoses-locked' : null, ].filter(Boolean).join(' ');
+
     const totalDoses = useWatch({
     control,
     name: 'totalDoses',
@@ -119,16 +124,18 @@ export const VaccinationForm = ({
                 className={errorClass(errors.vaccineName)}
                 placeholder='Vaccinationens namn'
                 disabled={isVaccineLocked}
+                aria-invalid={!!errors.vaccineName}
+                aria-describedby={vaccineNameDescribedBy}                
                 {...register('vaccineName', {
                     required: 'Vaccinationens namn krävs',
                 })} />
 
                 {errors.vaccineName && (
-                    <span className='form-error'>{errors.vaccineName.message}</span>
+                    <span id='vaccineName-error' className='form-error'>{errors.vaccineName.message}</span>
                 )}
 
                 {isVaccineLocked && 
-                    <small className='form-error'>
+                    <small id='vaccineName-locked' className='form-error'>
                         Kan inte ändras här
                     </small>
                 }
@@ -136,16 +143,18 @@ export const VaccinationForm = ({
 
             <label>
                 Datum för vaccination*
-                <small className='hint'>Ange datum i formatet ÅÅÅÅ-MM-DD</small>
+                <small id="date-hint" className='hint'>Ange datum i formatet ÅÅÅÅ-MM-DD</small>
 
                 <input 
                 type='date'
                 className={errorClass(errors.date)}
+                aria-describedby={dateDescribedBy}
+                aria-invalid={!!errors.date}
                 {...register('date', {
                     required: 'Datum krävs'
                 })} />
 
-                {errors.date && <span className='form-error'>{errors.date.message}</span>}
+                {errors.date && <span id='date-error' className='form-error'>{errors.date.message}</span>}
             </label>
             <div className='dose-container'>
                 <label>
@@ -153,6 +162,8 @@ export const VaccinationForm = ({
                     <input
                     type='text'
                     className={errorClass(errors.doseNumber)}
+                    aria-invalid={!!errors.doseNumber}
+                    aria-describedby={errors.doseNumber ? 'doseNumber-error' : undefined}
                     {...register('doseNumber', {
                         required: 'Dosnummer krävs',
                         pattern: patterns.onlyNumbers,
@@ -164,7 +175,7 @@ export const VaccinationForm = ({
                     />
 
                     {errors.doseNumber && (
-                    <span className='form-error'>{errors.doseNumber.message}</span>
+                    <span id='doseNumber-error' className='form-error'>{errors.doseNumber.message}</span>
                     )}
     
                 </label>
@@ -173,6 +184,8 @@ export const VaccinationForm = ({
                     <input
                     type='text'
                     className={errorClass(errors.totalDoses)}
+                    aria-invalid={!!errors.totalDoses}
+                    aria-describedby={totalDosesDescribedBy}
                     {...register('totalDoses', {
                         required: 'Totala doser krävs',
                         pattern: patterns.onlyNumbers,
@@ -182,11 +195,11 @@ export const VaccinationForm = ({
                     />
 
                     {errors.totalDoses && (
-                    <span className='form-error'>{errors.totalDoses.message}</span>
+                    <span id='totalDoses-error' className='form-error'>{errors.totalDoses.message}</span>
                     )}
 
                     {isVaccineLocked && 
-                    <span className='form-error'>
+                    <span id='totalDoses-locked' className='form-error'>
                         Kan inte ändras här
                     </span>
                     }
@@ -220,6 +233,8 @@ export const VaccinationForm = ({
                     <input
                     type='date'
                     className={errorClass(errors.reminderDate)}
+                    aria-invalid={!!errors.reminderDate}
+                    aria-describedby={errors.reminderDate ? 'reminderDate-error' : undefined}
                     {...register('reminderDate', {
                     required: 'Datum för påminnelse krävs',
                     validate: validators.notBeforeToday(),
@@ -228,7 +243,7 @@ export const VaccinationForm = ({
                     />
 
                     {errors.reminderDate && (
-                    <span className='form-error'>{errors.reminderDate.message}</span>
+                    <span id='reminderDate-error' className='form-error'>{errors.reminderDate.message}</span>
                     )}
                 </label>
             )}
