@@ -30,3 +30,13 @@ input[type="date"] {
     -webkit-appearance: none;
     appearance: none;
 }
+
+html {
+    font-size: 100%;
+}
+
+@media (min-width: 1280px) {
+    html {
+        font-size: 112.5%;
+    }
+}
