@@ -43,9 +43,8 @@
     .dose-container {
         display: flex;
         flex-direction: row;
-        justify-content: center;
         gap: 1rem;
-        width: 17rem;
+        width: 15rem;
         label{
             min-width: 5rem;            
             input {
@@ -81,8 +80,16 @@
         }
 
         .dose-container {
-            width: 33rem;
+            width: 23rem;
+            label {
+                min-width: 10.5rem;
+            }
             input {
+                min-width: 10.5rem;
+                width: 10.5rem;
+            }
+
+            span {
                 width: 10.5rem;
             }
         }

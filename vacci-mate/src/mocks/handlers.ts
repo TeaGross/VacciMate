@@ -8,10 +8,6 @@ export const handlers = [
     http.post('/api/reminders', async ({ request }) => {
         const body = (await request.json()) as Reminder;
 
-        
-
-        console.log('📧 Mock reminder email scheduled:', body);
-
         sendReminderEmail(body);
 
         return HttpResponse.json(

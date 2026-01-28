@@ -6,7 +6,6 @@ export function sendReminderEmail(reminder: {
     vaccineName: string;
     remindAt: string;
     }) {
-    console.log('📨 sendReminderEmail CALLED', reminder);
 
     return emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID!,
