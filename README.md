@@ -53,13 +53,24 @@ VacciMate is built with accessibility in mind:
 - Responsive design for mobile, tablet and desktop
 
 ## 📸 Screenshots 
-### Desktop View  
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/91a5fcb0-2e1b-4d00-9af8-ab7b6bb88e1f" />
+### Vaccination overview 
+<img width="600" height="2368" alt="vaccimate vercel app_home" src="https://github.com/user-attachments/assets/7f738821-728f-4f77-b4b7-34f90892f7d8" />
 
+### Vaccination detail page
+<img width="600" height="1412" alt="vaccimate vercel app_home (1)" src="https://github.com/user-attachments/assets/767f7e7b-41de-4509-a7a2-502a49db6d96" />
 
-### Mobile View  
+### Add vaccination pagee 
+<img width="600" height="1938" alt="vaccimate vercel app_home (2)" src="https://github.com/user-attachments/assets/5224bd42-0232-4b44-afaa-e73e1b361fd2" />
+
+###  Edit vaccination page with validation & error messages
+<img width="600" height="1976" alt="localhost_5173_home (2)" src="https://github.com/user-attachments/assets/1f3b49b9-1f8b-4576-b494-c6697424b9b9" />
+
+### Mobile views
+<img height="400" alt="localhost_5173_(iPhone SE)" src="https://github.com/user-attachments/assets/555964ce-9db6-4306-b926-9c6d48eb5cee" />
+<img  height="400" alt="localhost_5173_home(iPhone SE)" src="https://github.com/user-attachments/assets/26f7e6c1-50a7-4832-8e57-a6486add54fa" />
+<img height="450" alt="localhost_5173_home (1)" src="https://github.com/user-attachments/assets/2604ebd9-548b-4c82-90bb-5be4b9e3c789" />
+<img height="450" alt="localhost_5173_home(iPhone SE) (1)" src="https://github.com/user-attachments/assets/10a0b188-fc69-4ffa-863c-aca1d91f33bc" />
  
-
 ## 👩🏻‍💻 Tech stack
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
@@ -70,7 +81,6 @@ VacciMate is built with accessibility in mind:
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) 
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
-![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black)
 ![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
   
 ## 🍎 Future development
