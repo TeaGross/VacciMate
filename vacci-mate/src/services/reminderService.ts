@@ -10,7 +10,6 @@ export const createReminder = async (
             vaccineName: reminder.vaccineName,
             remindAt: reminder.remindAt,
         });
-        console.log('Påminnelse-mejl skickat', reminder);
     } catch (error) {
         console.error('Fel vid mejl-sändning:', error);
         throw new Error('Kunde inte skicka påminnelse-mejl');
