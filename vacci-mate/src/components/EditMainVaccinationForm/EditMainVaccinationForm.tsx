@@ -46,12 +46,14 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             Vaccinationens namn
             <input
             className={errorClass(errors.vaccineName)}
+            aria-invalid={!!errors.vaccineName}
+            aria-describedby={errors.vaccineName ? 'vaccineName-error' : undefined}
             {...register('vaccineName', {
                 required: 'Vaccinationens namn krävs',
             })}
             />
             {errors.vaccineName && (
-            <span className='form-error'>{errors.vaccineName.message}</span>
+            <span id="vaccineName-error" className='form-error'>{errors.vaccineName.message}</span>
             )}
         </label>
 
@@ -60,6 +62,8 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             <input
             type='text'
             className={errorClass(errors.totalDoses)}
+            aria-invalid={!!errors.totalDoses}
+            aria-describedby={errors.totalDoses ? 'totalDoses-error' : undefined}
             {...register('totalDoses', {
                 required: 'Totala doser krävs',
                 pattern: patterns.onlyNumbers,
@@ -70,7 +74,7 @@ export const EditMainVaccinationForm = ({ vaccination, onSuccess }: Props) => {
             })}
             />
             {errors.totalDoses && (
-            <span className='form-error'>{errors.totalDoses.message}</span>
+            <span id='totalDoses-error' className='form-error'>{errors.totalDoses.message}</span>
             )}
         </label>
 

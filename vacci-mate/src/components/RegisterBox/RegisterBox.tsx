@@ -14,9 +14,7 @@ export const RegisterBox = ({title = 'Skapa ett konto och håll koll på dina va
         <div className='register-box'>
             <h3>{title}</h3>
 
-            <Link to={to} className='register-box-link link'>
-                <PrimaryButton type='submit'>{buttonText}</PrimaryButton>
-            </Link>
+            <PrimaryButton as={Link} to={to} type='submit'>{buttonText}</PrimaryButton>
 
         </div>
     );
