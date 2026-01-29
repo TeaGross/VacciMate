@@ -1,14 +1,29 @@
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-
 }
 
-.link {
+/* Global styling */
+body {
+    font-family: 'Merriweather', serif;
+}
+
+a {
     text-decoration: none;
 }
 
-h2 {
-        font-family: 'Merriweather', serif;
+/* Base font size */
+html {
+    font-size: 100%;
+}
+
+
+/* Scale up the entire UI on large screens */
+@media (min-width: 1280px) {
+    html {
+        font-size: 112.5%;
+    }
 }
 
 .page {
@@ -17,26 +32,19 @@ h2 {
     align-items: center;
 }
 
+/* Reusable style for form validation errors */
 .form-error {
-        color: red;
-        font-size: 0.9rem;
+    color: red;
+    font-size: 0.9rem;
 }
 
+/* Helper text / hints under inputs */
 .hint {
     font-size: 0.8rem;
 }
 
+/* Normalize date input appearance across browsers */
 input[type="date"] {
     -webkit-appearance: none;
     appearance: none;
-}
-
-html {
-    font-size: 100%;
-}
-
-@media (min-width: 1280px) {
-    html {
-        font-size: 112.5%;
-    }
 }

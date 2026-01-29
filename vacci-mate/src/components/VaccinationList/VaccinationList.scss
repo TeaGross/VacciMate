@@ -7,14 +7,12 @@
         border: 2px solid #3118118e;
         background-color: white;
         margin-bottom: 10px;
-        font-family: 'Merriweather', serif;
         font-size: 1rem;
         padding-left: 0.5rem;
 
         
         .vaccination-link{
             display: block;
-            text-decoration: none;
             color: black;
 
             &:focus-visible {
@@ -50,8 +48,6 @@
     .card-actions {
         position: relative;
         .detail-link {
-        text-decoration: none;
-        color: black;
         display: flex;
         position: absolute;
         bottom: 1rem;
