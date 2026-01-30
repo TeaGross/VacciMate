@@ -4,7 +4,7 @@ import './index.css';
 import App from './App.tsx';
 import emailjs from '@emailjs/browser';
 
-// Initiera EmailJS
+// Initiate EmailJS
 emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY!);
 
 async function enableMocking() {
