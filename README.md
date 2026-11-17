@@ -54,16 +54,16 @@ VacciMate is built with accessibility in mind:
 
 ## 📸 Screenshots 
 ### Vaccination overview 
-<img width="600" height="2368" alt="vaccimate vercel app_home" src="https://github.com/user-attachments/assets/7f738821-728f-4f77-b4b7-34f90892f7d8" />
+<img width="600" alt="vaccimate vercel app_home" src="https://github.com/user-attachments/assets/7f738821-728f-4f77-b4b7-34f90892f7d8" />
 
 ### Vaccination detail page
-<img width="600" height="1412" alt="vaccimate vercel app_home (1)" src="https://github.com/user-attachments/assets/767f7e7b-41de-4509-a7a2-502a49db6d96" />
+<img width="600" alt="vaccimate vercel app_home (1)" src="https://github.com/user-attachments/assets/767f7e7b-41de-4509-a7a2-502a49db6d96" />
 
 ### Add vaccination pagee 
-<img width="600" height="1938" alt="vaccimate vercel app_home (2)" src="https://github.com/user-attachments/assets/5224bd42-0232-4b44-afaa-e73e1b361fd2" />
+<img width="600" alt="vaccimate vercel app_home (2)" src="https://github.com/user-attachments/assets/5224bd42-0232-4b44-afaa-e73e1b361fd2" />
 
 ###  Edit vaccination page with validation & error messages
-<img width="600" height="1976" alt="localhost_5173_home (2)" src="https://github.com/user-attachments/assets/1f3b49b9-1f8b-4576-b494-c6697424b9b9" />
+<img width="600" alt="localhost_5173_home (2)" src="https://github.com/user-attachments/assets/1f3b49b9-1f8b-4576-b494-c6697424b9b9" />
 
 ### Mobile views
 <img height="400" alt="localhost_5173_(iPhone SE)" src="https://github.com/user-attachments/assets/555964ce-9db6-4306-b926-9c6d48eb5cee" />
